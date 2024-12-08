@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medally_pro/views/auth%20_view/registration_view/registration_view.dart';
+import 'package:medally_pro/views/splash_view/splash_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const RegistrationView(),
+      home: const SplashScreen(),
     );
   }
 }
