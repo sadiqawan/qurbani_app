@@ -27,8 +27,8 @@ class LoginScreen extends StatelessWidget {
                     clipper: _BottomCurveClipper(),
                     child: Image.asset(
                       'assets/images/medical-icon.png',
-                      width: double.infinity,
-                      height: 250.h,
+                      width: 180.w,
+                      height: 180.h,
                       fit: BoxFit.cover,
                     ),
                   ),

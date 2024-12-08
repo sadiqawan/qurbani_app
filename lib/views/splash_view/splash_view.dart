@@ -1,13 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:fade_out_particle/fade_out_particle.dart';
-
 import '../../const/constant_colors.dart';
 import '../../const/contant_style.dart';
 import '../auth _view/login_view/login_view.dart';
@@ -53,8 +49,8 @@ class _SplashScreenState extends State<SplashScreen> {
             Column(
               children: [
                 Container(
-                  width: 220.w,
-                  height: 220.h,
+                  width: 180.w,
+                  height: 180.h,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(

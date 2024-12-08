@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:medally_pro/views/nave_view/profile_view/profile_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-
 import '../../const/constant_colors.dart';
 import '../../controller/app_controller.dart';
 import 'home_view/home_view.dart';
