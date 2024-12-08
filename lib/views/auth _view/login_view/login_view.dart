@@ -7,6 +7,7 @@ import '../../../componants/custom_text_feild.dart';
 import '../../../const/constant_colors.dart';
 import '../../../const/contant_style.dart';
 import '../auth_controller.dart';
+import '../forget_view/forget_password_view.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -63,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                       child: InkWell(
                         child: Text('Forgot Password?', style: kSmallTitle1),
                         onTap: () {
-                          // Get.to(() => const ForgetPasswordScreen());
+                          Get.to(() => const ForgetPasswordScreen());
                         },
                       ),
                     ),
