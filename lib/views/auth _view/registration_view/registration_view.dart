@@ -7,6 +7,7 @@ import '../../../componants/custom_button.dart';
 import '../../../componants/custom_text_feild.dart';
 import '../../../const/constant_colors.dart';
 import '../../../const/contant_style.dart';
+import '../login_view/login_view.dart';
 
 class RegistrationView extends StatefulWidget {
   const RegistrationView({super.key});
@@ -122,7 +123,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                             child: Text("Login here",
                                 style: kSubTitle2B.copyWith(fontSize: 15.sp)),
                             onTap: () {
-                              // Get.offAll(() => const LoginScreen());
+                              Get.offAll(() => const LoginScreen());
                             },
                           )
                         ],

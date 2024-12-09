@@ -46,6 +46,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   salomon_bottom_bar: ^3.3.2
   fade_out_particle: ^1.2.1
+  intl: ^0.20.1
 
 
 

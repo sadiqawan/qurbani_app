@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../nave_view/navbar_view.dart';
 import 'login_view/login_view.dart';
 
 class AuthController extends GetxController{
@@ -83,7 +84,7 @@ class AuthController extends GetxController{
         backgroundColor: Colors.green.withOpacity(.3),
       );
       isLoading.value = false;
-      // Get.offAll(() => const BottomNavbarScreen());
+      Get.offAll(() => const BottomNavbarScreen());
       final SharedPreferences pref = await SharedPreferences.getInstance();
       await pref.setBool('is_login', true);
     } catch (e) {
@@ -111,7 +112,7 @@ class AuthController extends GetxController{
         backgroundColor: Colors.green.withOpacity(.3),
       );
       isLoading.value = false;
-      // Get.offAll(const LoginScreen());
+      Get.offAll(const LoginScreen());
 
     } catch (e) {
       print('Error: $e');

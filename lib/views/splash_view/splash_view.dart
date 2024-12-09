@@ -63,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   duration: const Duration(seconds: 5),
                   disappear: true,
                   child: Text(
-                    'MediallyPro',
+                    'MedallyPro',
                     style: kSubTitle2B.copyWith(fontSize: 38.sp),
                   ),
                 )
