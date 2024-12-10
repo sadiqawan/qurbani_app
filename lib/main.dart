@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:medally_pro/views/splash_view/splash_view.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
@@ -35,14 +35,8 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.cyan,
             ),
-            home: const SplashScreen()
-          // ModelTestClass()
-          // BottomNavbarScreen()
-
-        );
+            home: const SplashScreen());
       },
     );
   }
 }
-
-

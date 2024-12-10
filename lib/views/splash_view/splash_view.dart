@@ -31,10 +31,10 @@ class _SplashScreenState extends State<SplashScreen> {
     if (v == true && v != null) {
       Timer(
         const Duration(seconds: 5),
-        () => Get.to(const BottomNavbarScreen()),
+        () => Get.offAll(const BottomNavbarScreen()),
       );
     } else {
-      Timer(const Duration(seconds: 5), () => Get.to(const LoginScreen()));
+      Timer(const Duration(seconds: 5), () => Get.offAll(const LoginScreen()));
     }
   }
 
@@ -57,6 +57,9 @@ class _SplashScreenState extends State<SplashScreen> {
                         image: AssetImage('assets/images/medical-icon.png'),
                         fit: BoxFit.cover),
                   ),
+                ),
+                SizedBox(
+                  height: 80,
                 ),
                 FadeOutParticle(
                   curve: Curves.bounceIn,
