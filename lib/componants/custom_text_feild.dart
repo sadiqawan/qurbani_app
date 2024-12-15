@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../const/constant_colors.dart';
 
-
 class CustomTextFeild extends StatelessWidget {
   final String hint;
   final IconData icon;
@@ -13,6 +12,7 @@ class CustomTextFeild extends StatelessWidget {
   final TextInputType? keyBordType;
   final bool? obscureText;
   final ValueChanged<String>? onSubmit;
+  final int? maxLine;
 
   const CustomTextFeild({
     required this.hint,
@@ -20,7 +20,9 @@ class CustomTextFeild extends StatelessWidget {
     required this.icon,
     super.key,
     this.keyBordType,
-    this.obscureText, this.onSubmit,
+    this.obscureText,
+    this.onSubmit,
+    this.maxLine,
   });
 
   @override
@@ -35,6 +37,7 @@ class CustomTextFeild extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextField(
+        maxLines: maxLine ?? 1,
         onSubmitted: onSubmit,
         obscureText: obscureText ?? false,
         keyboardType: keyBordType,

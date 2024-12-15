@@ -6,9 +6,8 @@ import 'package:get/get.dart';
 import 'package:medally_pro/const/constant_colors.dart';
 import 'package:medally_pro/views/nave_view/home_view/home_controller.dart';
 import 'package:radial_button/widget/circle_floating_button.dart';
+import '../../../componants/constant_container.dart';
 import '../../../const/contant_style.dart';
-import 'add_medicine_view/add_contant_view.dart';
-import 'add_membar/add_membar.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -35,36 +34,81 @@ class _HomeViewState extends State<HomeView> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           children: [
-            SizedBox(height: 50.h),
+
+            Padding(
+              padding:  EdgeInsets.symmetric(vertical: 50.h),
+
+              child: Row(
+                children: [
+                  userImage(),
+                  // CircleAvatar(
+                  //   maxRadius: 30.sp,
+                  //   backgroundColor: Colors.transparent,
+                  //   backgroundImage:
+                  //       const AssetImage("assets/images/icon_person.png"),
+                  // ),
+                  SizedBox(width: 5.w),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Welcome To 👋", style: kSubTitle2B),
+                      Text(
+                        "MedallyPro",
+                        style: kSubTitle2B.copyWith(fontSize: 18.sp),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+
+            Padding(
+              padding:  EdgeInsets.symmetric(vertical: 10.h),
+              child: Row(
+                            children: [
+              Expanded(
+                  child: ConstantContainer(
+                text: 'Active Medicine',
+                iconData: Icons.access_time,
+                onTap: () {},
+              )),
+              SizedBox(
+                width: 5.w,
+              ),
+              Expanded(
+                  child: ConstantContainer(
+                    text: 'Medicine History',
+                    iconData: Icons.history,
+                    onTap: () {},
+                  )),
+                            ],
+                          ),
+            ),
+            // Text(
+            //   'Your Members',
+            //   style: kSmallTitle1,
+            // ),
+            // Expanded(child: memberList()),
             Row(
               children: [
-                userImage(),
-                // CircleAvatar(
-                //   maxRadius: 30.sp,
-                //   backgroundColor: Colors.transparent,
-                //   backgroundImage:
-                //       const AssetImage("assets/images/icon_person.png"),
-                // ),
-                SizedBox(width: 5.w),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Welcome To 👋", style: kSubTitle2B),
-                    Text(
-                      "MedallyPro",
-                      style: kSubTitle2B.copyWith(fontSize: 18.sp),
-                    ),
-                  ],
+                Expanded(
+                    child: ConstantContainer(
+                      text: 'Active Medicine',
+                      iconData: Icons.access_time,
+                      onTap: () {},
+                    )),
+                SizedBox(
+                  width: 5.w,
                 ),
+                Expanded(
+                    child: ConstantContainer(
+                      text: 'Medicine History',
+                      iconData: Icons.history,
+                      onTap: () {},
+                    )),
               ],
             ),
-            SizedBox(height: 20.h),
-            Expanded(child: SizedBox()),
-            Text(
-              'Your Members',
-              style: kSmallTitle1,
-            ),
-            Expanded(child: memberList()),
           ],
         ),
       ),
