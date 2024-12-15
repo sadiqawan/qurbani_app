@@ -51,19 +51,17 @@ class _AddMemberState extends State<AddMember> {
                     child: Obx(() {
                       return homeController.image.value == null
                           ? Image.asset(
-                        'assets/images/icon_profile.png', // Default image
-                        fit: BoxFit.fill,
-                      )
+                              'assets/images/icon_profile.png', // Default image
+                              fit: BoxFit.fill,
+                            )
                           : Image.file(
-                        homeController.image.value! ,
-                        fit: BoxFit.fill, // Adjust for better display
-                      );
+                              homeController.image.value!,
+                              fit: BoxFit.fill, // Adjust for better display
+                            );
                     }),
                   ),
                 ),
               ),
-
-
               InkWell(
                 onTap: () {
                   Get.bottomSheet(
@@ -139,14 +137,13 @@ class _AddMemberState extends State<AddMember> {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 15.h),
                 child: Text(
-                  'Enter your Member No: ',
+                  'Enter Relation ',
                   style: kSmallTitle1.copyWith(color: Colors.black),
                 ),
               ),
               CustomTextFeild(
                 obscureText: false,
-                keyBordType: TextInputType.number,
-                hint: 'Member No',
+                hint: 'Relation',
                 icon: Icons.person,
                 controller: numeberController,
               ),
@@ -158,26 +155,26 @@ class _AddMemberState extends State<AddMember> {
                         color: kPriemryColor,
                       ))
                     : CustomButton(
-                  title: 'Add Member',
-                  onTap: () {
-                    final name = nameController.text.trim();
-                    final number = numeberController.text.trim();
+                        title: 'Add Member',
+                        onTap: () {
+                          final name = nameController.text.trim();
+                          final number = numeberController.text.trim();
 
-                    if (name.isEmpty || number.isEmpty) {
-                      Get.snackbar(
-                        "Failed",
-                        "Enter the required credentials",
-                        snackPosition: SnackPosition.TOP,
-                        backgroundColor: Colors.red.withOpacity(.3),
+                          if (name.isEmpty || number.isEmpty) {
+                            Get.snackbar(
+                              "Failed",
+                              "Enter the required credentials",
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.red.withOpacity(.3),
+                            );
+                          } else {
+                            homeController.addMember(name, number).then((_) {
+                              nameController.clear();
+                              numeberController.clear();
+                            });
+                          }
+                        },
                       );
-                    } else {
-                      homeController.addMember(name, number).then((_) {
-                        nameController.clear();
-                        numeberController.clear();
-                      });
-                    }
-                  },
-                );
                 ;
               })
             ],
