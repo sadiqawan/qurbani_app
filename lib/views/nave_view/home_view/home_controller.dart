@@ -124,4 +124,14 @@ class HomeController extends GetxController {
         .snapshots();
   }
 
+  // Stream to get medicationData data
+  Stream<QuerySnapshot<Map<String, dynamic>>> getUserMedicationStream() {
+    String uId = FirebaseAuth.instance.currentUser!.uid;
+    return FirebaseFirestore.instance
+        .collection('usersMemberList')
+        .doc(uId)
+        .collection('medication')
+        .snapshots();
+  }
+
 }
