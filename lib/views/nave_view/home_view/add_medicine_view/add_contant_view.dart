@@ -25,6 +25,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
   final TextEditingController doctorController = TextEditingController();
   final TextEditingController durationController = TextEditingController();
   final TextEditingController doseController = TextEditingController();
+  final TextEditingController memController = TextEditingController();
   TimeOfDay? selectedTime;
 
   @override
@@ -83,6 +84,13 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                 Icons.format_list_numbered_rounded,
                 isNumber: true,
               ),
+              _buildInputField(
+                'Enter member:',
+                memController,
+                'Member Name',
+                Icons.person_outline,
+                isNumber: false,
+              ),
 
               SizedBox(height: 10.h),
               // Time Picker
@@ -100,9 +108,9 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                 },
                 child: Container(
                   padding:
-                  EdgeInsets.symmetric(horizontal: 12.w, vertical: 15.h),
+                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 15.h),
                   decoration: BoxDecoration(
-                    color: kPriemryColor.withOpacity(0.1),
+                    color: kPriemryColor,
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: Row(
@@ -130,17 +138,17 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                     child: Obx(() {
                       return controller.image.value == null
                           ? Icon(
-                        Icons.medical_services_outlined,
-                        size: 200,
-                      )
-                      // Image.asset(
-                      //   'assets/images/icon_profile.png', // Default image
-                      //   fit: BoxFit.fill,
-                      // )
+                              Icons.medical_services_outlined,
+                              size: 200,
+                            )
+                          // Image.asset(
+                          //   'assets/images/icon_profile.png', // Default image
+                          //   fit: BoxFit.fill,
+                          // )
                           : Image.file(
-                        controller.image.value!,
-                        fit: BoxFit.fill, // Adjust for better display
-                      );
+                              controller.image.value!,
+                              fit: BoxFit.fill, // Adjust for better display
+                            );
                     }),
                   ),
                 ),
@@ -166,7 +174,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                               ),
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Flexible(
                                       child: CustomButton(
@@ -204,7 +212,6 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                   ],
                 ),
               ),
-
 
               // // Image Upload Section
               // Center(
@@ -270,7 +277,8 @@ class _AddMedicineViewState extends State<AddMedicineView> {
               Center(
                 child: Obx(() {
                   return CustomButton(
-                    title: controller.isLoading.value ? 'Submitting...' : 'Submit',
+                    title:
+                        controller.isLoading.value ? 'Submitting...' : 'Submit',
                     onTap: () {
                       if (!controller.isLoading.value) {
                         controller.addMedicine(
@@ -281,6 +289,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                           duration: durationController.text.trim(),
                           intakePerDay: doseController.text.trim(),
                           reminderTime: selectedTime?.format(context) ?? '',
+                          memberName: memController.text.trim(),
                         );
                       }
                     },
@@ -296,13 +305,13 @@ class _AddMedicineViewState extends State<AddMedicineView> {
 
   // Helper method to build input fields
   Widget _buildInputField(
-      String label,
-      TextEditingController controller,
-      String hint,
-      IconData icon, {
-        bool isNumber = false,
-        int maxLines = 1,
-      }) {
+    String label,
+    TextEditingController controller,
+    String hint,
+    IconData icon, {
+    bool isNumber = false,
+    int maxLines = 1,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -321,8 +330,6 @@ class _AddMedicineViewState extends State<AddMedicineView> {
     );
   }
 }
-
-
 
 /*
 import 'package:flutter/material.dart';
@@ -527,7 +534,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                    */
 /* debugPrint('Medicine details submitted!');
                     debugPrint(
-                        'Selected Time: ${selectedTime?.format(context) ?? 'No Time Selected'}');*//*
+                        'Selected Time: ${selectedTime?.format(context) ?? 'No Time Selected'}');*/ /*
 
                   },
                 ),

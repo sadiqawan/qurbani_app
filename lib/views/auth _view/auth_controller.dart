@@ -58,7 +58,7 @@ class AuthController extends GetxController{
         backgroundColor: Colors.green.withOpacity(.3),
       );
       isLoading.value = false;
-      // Get.offAll(() => const LoginScreen());
+      Get.offAll(() => const LoginScreen());
     } catch (error) {
       isLoading.value = false;
       print(error.toString());

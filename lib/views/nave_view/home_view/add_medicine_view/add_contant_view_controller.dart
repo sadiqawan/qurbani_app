@@ -31,6 +31,7 @@ class AddMedicineController extends GetxController {
   Future<void> addMedicine({
     required String medicineName,
     required String strength,
+    required String memberName,
     String? note,
     String? doctorName,
     required String duration,
@@ -69,6 +70,7 @@ class AddMedicineController extends GetxController {
         'duration': duration,
         'intakePerDay': intakePerDay,
         'reminderTime': reminderTime,
+        'memberName': memberName,
         'picture': uploadedImageUrl,
       });
 

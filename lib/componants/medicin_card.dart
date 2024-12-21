@@ -15,6 +15,7 @@ class MedicineCard extends StatelessWidget {
   final String image;
  final VoidCallback editOnTap;
  final VoidCallback deleteOnTap;
+ final VoidCallback onTap;
 
   const MedicineCard({
     super.key,
@@ -27,113 +28,117 @@ class MedicineCard extends StatelessWidget {
     required this.image,
     required this.editOnTap,
     required this.deleteOnTap,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 16.h),
-      padding: EdgeInsets.all(12.w),
-      decoration: BoxDecoration(
-        color: kPriemryColor,
-        borderRadius: BorderRadius.circular(10.r),
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 40.r,
-            backgroundColor: Colors.cyan,
-            backgroundImage: NetworkImage(image),
-          ),
-          SizedBox(width: 12.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Medicine',
-                  style: kHeading1.copyWith(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
-                      color: kWhit
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.only(bottom: 16.h),
+        padding: EdgeInsets.all(12.w),
+        decoration: BoxDecoration(
+          color: kPriemryColor,
+          borderRadius: BorderRadius.circular(10.r),
+        ),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 40.r,
+              backgroundColor: Colors.cyan,
+              backgroundImage: NetworkImage(image),
+            ),
+            SizedBox(width: 12.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Medicine',
+                    style: kHeading1.copyWith(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                        color: kWhit
 
+                    ),
+                  ),Text(
+                    medicineName,
+                    style: kHeading1.copyWith(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),Text(
-                  medicineName,
-                  style: kHeading1.copyWith(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
+                  Text(
+                    'Doctor',
+                    style: kSmallTitle1.copyWith(fontWeight: FontWeight.bold,
+                        color: kWhit
+                    ),
+                  ),Text(
+                    doctorName,
+                    style: kSmallTitle1.copyWith(fontWeight: FontWeight.bold),
                   ),
-                ),
-                Text(
-                  'Doctor',
-                  style: kSmallTitle1.copyWith(fontWeight: FontWeight.bold,
+                  Text(
+                    "Duration",
+                    style: kSmallTitle1.copyWith(
                       color: kWhit
+                    ),
+                  ),Text(
+                    "$durationTime days",
+                    style: kSmallTitle1,
                   ),
-                ),Text(
-                  doctorName,
-                  style: kSmallTitle1.copyWith(fontWeight: FontWeight.bold),
+                  Row(
+                    children: [
+                      Icon(Icons.timelapse, size: 16.w),
+                      SizedBox(width: 4.w),
+                      Text(time, style: kSmallTitle1),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20.h),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.edit_outlined),
+                        onPressed: editOnTap,
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: deleteOnTap,
+                      ),
+                    ],
+                  ),
                 ),
                 Text(
-                  "Duration",
+                  'Remaining Dose',
                   style: kSmallTitle1.copyWith(
                     color: kWhit
                   ),
-                ),Text(
-                  "$durationTime days",
+                ),
+                Text(
+                  remainingDose,
                   style: kSmallTitle1,
                 ),
-                Row(
-                  children: [
-                    Icon(Icons.timelapse, size: 16.w),
-                    SizedBox(width: 4.w),
-                    Text(time, style: kSmallTitle1),
-                  ],
+                Text(
+                  'Member Name',
+                  style: kSmallTitle1.copyWith(
+                      color: kWhit
+                  ),
+                ),
+                Text(
+                  memberName,
+                  style: kSmallTitle1,
                 ),
               ],
             ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 20.h),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.edit_outlined),
-                      onPressed: editOnTap,
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: deleteOnTap,
-                    ),
-                  ],
-                ),
-              ),
-              Text(
-                'Remaining Dose',
-                style: kSmallTitle1.copyWith(
-                  color: kWhit
-                ),
-              ),
-              Text(
-                remainingDose,
-                style: kSmallTitle1,
-              ),
-              Text(
-                'Member Name',
-                style: kSmallTitle1.copyWith(
-                    color: kWhit
-                ),
-              ),
-              Text(
-                memberName,
-                style: kSmallTitle1,
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
