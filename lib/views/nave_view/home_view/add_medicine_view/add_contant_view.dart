@@ -102,7 +102,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                 doseController,
                 'Dose',
                 Icons.format_list_numbered_rounded,
-                isNumber: true,
+                isNumber: false,
               ),
               _buildInputField(
                 'Enter member:',
