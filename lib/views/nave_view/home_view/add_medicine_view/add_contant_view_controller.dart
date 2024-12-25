@@ -93,6 +93,73 @@ class AddMedicineController extends GetxController {
       isLoading.value = false;
     }
   }
+  Future<void> updateMedicine({
+    required String documentId, // Include document ID for updating specific records
+    required String medicineName,
+    required String strength,
+    required String memberName,
+    String? note,
+    String? doctorName,
+    required String duration,
+    required String intakePerDay,
+    required String reminderTime,
+  }) async {
+    try {
+      isLoading.value = true;
+
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        throw Exception('User is not authenticated');
+      }
+
+      final medicationRef = FirebaseFirestore.instance
+          .collection('usersMemberList')
+          .doc(user.uid)
+          .collection('medication')
+          .doc(documentId); // Specify the document to update
+
+      String? uploadedImageUrl;
+
+      if (image.value != null) {
+        final storageRef = FirebaseStorage.instance
+            .ref('medication/${user.uid}')
+            .child('${DateTime.now().millisecondsSinceEpoch}.jpg');
+
+        await storageRef.putFile(image.value!);
+        uploadedImageUrl = await storageRef.getDownloadURL();
+      }
+
+      await medicationRef.set({
+        'medicineName': medicineName,
+        'strength': strength,
+        'note': note,
+        'doctorName': doctorName,
+        'duration': duration,
+        'intakePerDay': intakePerDay,
+        'reminderTime': reminderTime,
+        'memberName': memberName,
+        if (uploadedImageUrl != null) 'picture': uploadedImageUrl,
+      }, SetOptions(merge: true)); // Merge updates with existing data
+
+      Get.snackbar(
+        "Success",
+        "Medicine details updated successfully",
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green.withOpacity(.3),
+      );
+
+      image.value = null; // Reset image after upload
+    } catch (error) {
+      Get.snackbar(
+        'Error',
+        'Failed to update medicine: $error',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red.withOpacity(.3),
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
 
 

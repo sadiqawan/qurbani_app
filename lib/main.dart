@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +7,7 @@ import 'package:medally_pro/views/splash_view/splash_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Alarm.init();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: 'AIzaSyDkfCdpv_V4-mDfMkLylw7B-7GKs1ZJApQ',
@@ -30,12 +32,12 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (BuildContext context, Widget? child) {
         return GetMaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'MedallyPro',
-            theme: ThemeData(
-              primarySwatch: Colors.cyan,
-            ),
-            home: const SplashScreen(),
+          debugShowCheckedModeBanner: false,
+          title: 'MedallyPro',
+          theme: ThemeData(
+            primarySwatch: Colors.cyan,
+          ),
+          home: const SplashScreen(),
         );
       },
     );

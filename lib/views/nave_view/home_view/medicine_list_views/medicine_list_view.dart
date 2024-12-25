@@ -7,6 +7,7 @@ import 'package:medally_pro/views/nave_view/home_view/home_controller.dart';
 import '../../../../componants/medicin_card.dart';
 import '../../../../const/constant_colors.dart';
 import '../../../../const/contant_style.dart';
+import '../add_medicine_view/edit_contant_view.dart';
 
 class MedicineListView extends StatelessWidget {
   const MedicineListView({super.key});
@@ -33,69 +34,71 @@ class MedicineListView extends StatelessWidget {
             );
           }
 
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('Error loading medication data'),
+            );
+          }
+
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return const Center(
               child: Text('No Active Medicine added yet'),
             );
           }
 
-          final medication = snapshot.data!.docs;
+          final medications = snapshot.data!.docs;
 
           return ListView.builder(
-            itemCount: medication.length,
+            itemCount: medications.length,
             itemBuilder: (context, index) {
-              final medicationData = medication[index].data();
+              final medicationData = medications[index].data();
               final medicineName = medicationData['medicineName'] ?? 'Unknown';
-              final drName = medicationData['doctorName'] ?? 'N/A';
+              final doctorName = medicationData['doctorName'] ?? 'N/A';
               final reminderTime = medicationData['reminderTime'] ?? 'N/A';
-              final durtionTime = medicationData['duration'] ?? 'N/A';
+              final durationTime = medicationData['duration'] ?? 'N/A';
               final remainingDose = medicationData['strength'] ?? 'N/A';
               final memberName = medicationData['memberName'] ?? 'N/A';
-              final medicinImage = medicationData['picture'];
+              final medicineImage = medicationData['picture'];
 
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: MedicineCard(
                   onTap: () async {
                     final url = 'https://google.com/search?q=$medicineName';
-                    try {
-                      final uri = Uri.parse(url);
-                      if (await canLaunchUrl(uri)) {
-                        await launchUrl(uri,
-                            mode: LaunchMode.externalApplication);
-                      } else {
-                        Get.snackbar(
-                          "Error",
-                          "Cannot launch $url",
-                          snackPosition: SnackPosition.TOP,
-                          backgroundColor: Colors.red,
-                        );
-                      }
-                    } catch (e) {
+                    final uri = Uri.parse(url);
+
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri, mode: LaunchMode.externalApplication);
+                    } else {
                       Get.snackbar(
                         "Error",
-                        "An unexpected error occurred: $e",
+                        "Cannot launch $url",
                         snackPosition: SnackPosition.TOP,
                         backgroundColor: Colors.red,
                       );
                     }
                   },
                   medicineName: medicineName,
-                  doctorName: drName,
-                  durationTime: durtionTime,
+                  doctorName: doctorName,
+                  durationTime: durationTime,
                   time: reminderTime,
                   remainingDose: remainingDose,
                   memberName: memberName,
-                  image: medicinImage,
-                  editOnTap: () {},
+                  image: medicineImage,
+                  editOnTap: () {
+                    Get.to(() => EditMedicineView(
+                      documentId: medications[index].id,
+                    ));
+                  },
                   deleteOnTap: () async {
                     try {
                       await FirebaseFirestore.instance
                           .collection('usersMemberList')
                           .doc(FirebaseAuth.instance.currentUser!.uid)
                           .collection('medication')
-                          .doc(medication[index].id)
+                          .doc(medications[index].id)
                           .delete();
+
                       Get.snackbar(
                         "Success",
                         "Medication deleted successfully",
