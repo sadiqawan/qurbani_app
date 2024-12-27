@@ -17,6 +17,8 @@ class HomeController extends GetxController {
   Rxn<File> image = Rxn<File>();
   String imageUrl = '';
   var isLoading = false.obs;
+  var selectedMember = ''.obs;
+
 
   var itemsActionBar = [
     FloatingActionButton(

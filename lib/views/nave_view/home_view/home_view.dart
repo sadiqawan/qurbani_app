@@ -21,6 +21,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final HomeController homeController = Get.put(HomeController());
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +43,7 @@ class _HomeViewState extends State<HomeView> {
               child: Row(
                 children: [
                   userImage(),
-                  // CircleAvatar(
-                  //   maxRadius: 30.sp,
-                  //   backgroundColor: Colors.transparent,
-                  //   backgroundImage:
-                  //       const AssetImage("assets/images/icon_person.png"),
-                  // ),
+
                   SizedBox(width: 5.w),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

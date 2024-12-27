@@ -1,9 +1,12 @@
 import 'package:alarm/alarm.dart';
 import 'package:alarm/model/alarm_settings.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:medally_pro/views/nave_view/home_view/add_stock_views/add_stock_view.dart';
+import 'package:medally_pro/views/nave_view/home_view/home_controller.dart';
 import '../../../../componants/custom_button.dart';
 import '../../../../componants/custom_text_feild.dart';
 import '../../../../const/constant_colors.dart';
@@ -19,6 +22,7 @@ class AddMedicineView extends StatefulWidget {
 
 class _AddMedicineViewState extends State<AddMedicineView> {
   final AddMedicineController controller = Get.put(AddMedicineController());
+  final HomeController homeController = Get.put(HomeController());
 
   // Controllers for input fields
   final TextEditingController medicineController = TextEditingController();
@@ -28,25 +32,10 @@ class _AddMedicineViewState extends State<AddMedicineView> {
   final TextEditingController durationController = TextEditingController();
   final TextEditingController doseController = TextEditingController();
   final TextEditingController memController = TextEditingController();
-  TimeOfDay? selectedTime;
 
-  // final alarmSettings = AlarmSettings(
-  //   id: 42,
-  //   dateTime: dateTime,
-  //   assetAudioPath: 'assets/alarm.mp3',
-  //   loopAudio: true,
-  //   vibrate: true,
-  //   volume: 0.8,
-  //   fadeDuration: 3.0,
-  //   warningNotificationOnKill: Platform.isIOS,
-  //   androidFullScreenIntent: true,
-  //   notificationSettings: const NotificationSettings(
-  //     title: 'This is the title',
-  //     body: 'This is the body',
-  //     stopButton: 'Stop the alarm',
-  //     icon: 'notification_icon',
-  //   ),
-  // );
+  TimeOfDay? selectedTime;
+  TimeOfDay? secondSelectedTime;
+  TimeOfDay? thirdSelectedTime;
 
   @override
   Widget build(BuildContext context) {
@@ -104,14 +93,18 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                 Icons.format_list_numbered_rounded,
                 isNumber: false,
               ),
-              _buildInputField(
-                'Enter member:',
-                memController,
-                'Member Name',
-                Icons.person_outline,
-                isNumber: false,
+              SizedBox(height: 5.h),
+              Text(
+                'Select Member',
+                style: kSmallTitle1,
               ),
-
+              SizedBox(height: 10.h),
+              memberWidget(),
+              SizedBox(height: 10.h),
+              Text(
+                'Select Remainder',
+                style: kSmallTitle1,
+              ),
               SizedBox(height: 10.h),
               // Time Picker
               InkWell(
@@ -147,6 +140,122 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                   ),
                 ),
               ),
+
+              SizedBox(height: 15.h),
+
+              // second time alarm
+              Text(
+                'Select other 2nd Remainder (Optional)',
+                style: kSmallTitle1,
+              ),
+              SizedBox(height: 15.h),
+
+              InkWell(
+                onTap: () async {
+                  TimeOfDay? time = await showTimePicker(
+                    context: context,
+                    initialTime: secondSelectedTime ?? TimeOfDay.now(),
+                  );
+                  if (time != null) {
+                    setState(() {
+                      secondSelectedTime = time;
+                    });
+                  }
+                },
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 15.h),
+                  decoration: BoxDecoration(
+                    color: kPriemryColor,
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        secondSelectedTime != null
+                            ? secondSelectedTime!.format(context)
+                            : 'Select Time',
+                        style: kSmallTitle1.copyWith(color: Colors.black),
+                      ),
+                      Icon(Icons.access_time, color: Colors.black),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 15.h),
+
+              // third remainder
+              Text(
+                'Select other 3rd Remainder (Optional)',
+                style: kSmallTitle1,
+              ),
+              SizedBox(height: 15.h),
+
+              InkWell(
+                onTap: () async {
+                  TimeOfDay? time = await showTimePicker(
+                    context: context,
+                    initialTime: thirdSelectedTime ?? TimeOfDay.now(),
+                  );
+                  if (time != null) {
+                    setState(() {
+                      thirdSelectedTime = time;
+                    });
+                  }
+                },
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 15.h),
+                  decoration: BoxDecoration(
+                    color: kPriemryColor,
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        thirdSelectedTime != null
+                            ? thirdSelectedTime!.format(context)
+                            : 'Select Time',
+                        style: kSmallTitle1.copyWith(color: Colors.black),
+                      ),
+                      Icon(Icons.access_time, color: Colors.black),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 15.h),
+              Text(
+                'Set Stock Remainder (Optional)',
+                style: kSmallTitle1,
+              ),
+              SizedBox(height: 15.h),
+
+             /* InkWell(
+                onTap: () => Get.to(AddStockView()),
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 15.h),
+                  decoration: BoxDecoration(
+                    color: kPriemryColor,
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Stock Reminder',
+                        style: kSmallTitle1.copyWith(color: Colors.black),
+                      ),
+                      Icon(Icons.add, color: Colors.black),
+                    ],
+                  ),
+                ),
+              ),*/
+
+              // third remainder
 
               SizedBox(height: 15.h),
               Padding(
@@ -222,8 +331,10 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.upload,size: 30,),
-
+                    const Icon(
+                      Icons.upload,
+                      size: 30,
+                    ),
                     Text(
                       'Upload Pic',
                       style: kSubTitle2B,
@@ -234,15 +345,17 @@ class _AddMedicineViewState extends State<AddMedicineView> {
               SizedBox(height: 20.h),
               Center(
                 child: Obx(
-                      () {
+                  () {
                     return CustomButton(
-                      title: controller.isLoading.value ? 'Submitting...' : 'Submit',
+                      title: controller.isLoading.value
+                          ? 'Submitting...'
+                          : 'Submit',
                       onTap: () {
                         if (!controller.isLoading.value) {
                           if (selectedTime != null) {
                             final now = DateTime.now();
 
-                            // Convert selected TimeOfDay to DateTime
+                            // Convert selected TimeOfDay to DateTime for the first alarm
                             final alarmDateTime = DateTime(
                               now.year,
                               now.month,
@@ -251,9 +364,9 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                               selectedTime!.minute,
                             );
 
-                            // Define AlarmSettings
+                            // Define AlarmSettings for the first alarm
                             final alarmSettings = AlarmSettings(
-                              id: 42, // Unique ID for the alarm
+                              id: 1,
                               dateTime: alarmDateTime,
                               assetAudioPath: 'assets/alarm.mp3',
                               loopAudio: true,
@@ -269,6 +382,66 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                               ),
                             );
 
+                            // Define AlarmSettings for the second alarm if time is selected
+                            AlarmSettings? secondAlarmSettings;
+                            if (secondSelectedTime != null) {
+                              final secondAlarmDateTime = DateTime(
+                                now.year,
+                                now.month,
+                                now.day,
+                                secondSelectedTime!.hour,
+                                secondSelectedTime!.minute,
+                              );
+
+                              secondAlarmSettings = AlarmSettings(
+                                id: 2,
+                                dateTime: secondAlarmDateTime,
+                                assetAudioPath: 'assets/alarm.mp3',
+                                loopAudio: true,
+                                vibrate: true,
+                                volume: 0.8,
+                                fadeDuration: 3.0,
+                                androidFullScreenIntent: true,
+                                notificationSettings:
+                                    const NotificationSettings(
+                                  title: 'Second Medicine Reminder',
+                                  body: 'It’s time to take your medicine.',
+                                  stopButton: 'Stop the alarm',
+                                  icon: 'notification_icon',
+                                ),
+                              );
+                            }
+
+                            // Define AlarmSettings for the third alarm if time is selected
+                            AlarmSettings? thirdAlarmSettings;
+                            if (thirdSelectedTime != null) {
+                              final thirdAlarmDateTime = DateTime(
+                                now.year,
+                                now.month,
+                                now.day,
+                                thirdSelectedTime!.hour,
+                                thirdSelectedTime!.minute,
+                              );
+
+                              thirdAlarmSettings = AlarmSettings(
+                                id: 3,
+                                dateTime: thirdAlarmDateTime,
+                                assetAudioPath: 'assets/alarm.mp3',
+                                loopAudio: true,
+                                vibrate: true,
+                                volume: 0.8,
+                                fadeDuration: 3.0,
+                                androidFullScreenIntent: true,
+                                notificationSettings:
+                                    const NotificationSettings(
+                                  title: 'Third Medicine Reminder',
+                                  body: 'It’s time to take your medicine.',
+                                  stopButton: 'Stop the alarm',
+                                  icon: 'notification_icon',
+                                ),
+                              );
+                            }
+
                             // Call addMedicine to save data
                             controller.addMedicine(
                               medicineName: medicineController.text.trim(),
@@ -278,14 +451,24 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                               duration: durationController.text.trim(),
                               intakePerDay: doseController.text.trim(),
                               reminderTime: selectedTime?.format(context) ?? '',
-                              memberName: memController.text.trim(),
+                              memberName:
+                                  homeController.selectedMember.value ?? '',
                             );
 
-                            // Set the Alarm
+                            // Set the alarms
                             Alarm.set(alarmSettings: alarmSettings);
-                            Get.snackbar('Success', 'Alarm has been set successfully!');
+                            if (secondAlarmSettings != null) {
+                              Alarm.set(alarmSettings: secondAlarmSettings);
+                            }
+                            if (thirdAlarmSettings != null) {
+                              Alarm.set(alarmSettings: thirdAlarmSettings);
+                            }
+
+                            Get.snackbar('Success',
+                                'All alarms have been set successfully!');
                           } else {
-                            Get.snackbar('Error', 'Please select a time for the alarm');
+                            Get.snackbar('Error',
+                                'Please select at least the first time for the alarm');
                           }
                         }
                       },
@@ -293,7 +476,6 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                   },
                 ),
               ),
-
 
               // Submit Button
               // Center(
@@ -355,5 +537,78 @@ class _AddMedicineViewState extends State<AddMedicineView> {
       ],
     );
   }
-}
+// add member Widget
+  Widget memberWidget() {
+    final HomeController controller = Get.put(HomeController());
 
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      stream: controller.getUserDataStream(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Text(
+            'No Members Available',
+            style: kSmallTitle1,
+          );
+        }
+
+        // Extract member names from the Firestore documents
+        final members = snapshot.data!.docs
+            .map((doc) => doc.data()['memberName']
+                as String) // Replace 'name' with the field that contains the member name
+            .toList();
+
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 15.h),
+          decoration: BoxDecoration(
+            color: kPriemryColor,
+            borderRadius: BorderRadius.circular(8.r),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Select Member',
+                style: kSmallTitle1.copyWith(color: Colors.black),
+              ),
+              Obx(() {
+                return DropdownButton<String>(
+                  value: controller.selectedMember.value.isEmpty
+                      ? null
+                      : controller.selectedMember.value,
+                  // Default to null if no selection
+                  hint: Text(
+                    'Choose Member',
+                    style: kSmallTitle1.copyWith(color: Colors.black),
+                  ),
+                  icon: const Icon(Icons.arrow_drop_down),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: kSmallTitle1.copyWith(color: Colors.black),
+                  dropdownColor: kWhit,
+                  underline: Container(height: 0),
+                  items: members.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      controller.selectedMember.value = newValue;
+                    }
+                  },
+                );
+              }),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}

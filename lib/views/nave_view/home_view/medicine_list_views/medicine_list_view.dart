@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medally_pro/views/nave_view/home_view/add_stock_views/add_stock_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:medally_pro/views/nave_view/home_view/home_controller.dart';
 import '../../../../componants/medicin_card.dart';
@@ -68,7 +69,8 @@ class MedicineListView extends StatelessWidget {
                     final uri = Uri.parse(url);
 
                     if (await canLaunchUrl(uri)) {
-                      await launchUrl(uri, mode: LaunchMode.externalApplication);
+                      await launchUrl(uri,
+                          mode: LaunchMode.externalApplication);
                     } else {
                       Get.snackbar(
                         "Error",
@@ -87,8 +89,54 @@ class MedicineListView extends StatelessWidget {
                   image: medicineImage,
                   editOnTap: () {
                     Get.to(() => EditMedicineView(
-                      documentId: medications[index].id,
-                    ));
+                          documentId: medications[index].id,
+                        ));
+                  },
+                  medTakenOnTap: () async {
+                    try {
+                      // Get the current document
+                      final docSnapshot = await FirebaseFirestore.instance
+                          .collection('usersMemberList')
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .collection('medication')
+                          .doc(medications[index].id)
+                          .get();
+
+                      if (docSnapshot.exists) {
+                        int currentIntake =
+                            int.parse(docSnapshot['strength'].toString());
+                        int updatedIntake = currentIntake - 1;
+                        String updatedIntakeInString = updatedIntake.toString();
+
+                        await FirebaseFirestore.instance
+                            .collection('usersMemberList')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .collection('medication')
+                            .doc(medications[index].id)
+                            .update({'strength': updatedIntakeInString});
+
+                        Get.snackbar(
+                          "Success",
+                          "Medication successfully taken",
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: Colors.green,
+                        );
+                      } else {
+                        Get.snackbar(
+                          "Error",
+                          "Document does not exist",
+                          snackPosition: SnackPosition.TOP,
+                          backgroundColor: Colors.red,
+                        );
+                      }
+                    } catch (e) {
+                      Get.snackbar(
+                        "Error",
+                        "Failed, something went wrong: $e",
+                        snackPosition: SnackPosition.TOP,
+                        backgroundColor: Colors.red,
+                      );
+                    }
                   },
                   deleteOnTap: () async {
                     try {
@@ -114,6 +162,7 @@ class MedicineListView extends StatelessWidget {
                       );
                     }
                   },
+                  stockReminderOnTap: () => Get.to(AddStockView()),
                 ),
               );
             },

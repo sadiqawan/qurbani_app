@@ -13,6 +13,7 @@ class AddMedicineController extends GetxController {
   Rxn<File> image = Rxn<File>();
   var isLoading = false.obs;
 
+
   // Function to pick an image from the source
   Future<void> pickImageFrom(ImageSource source) async {
     try {
