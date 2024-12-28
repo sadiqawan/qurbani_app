@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../../const/constant_colors.dart';
 import 'add_medicine_view/add_contant_view.dart';
 import 'add_membar/add_membar.dart';
@@ -18,7 +16,6 @@ class HomeController extends GetxController {
   String imageUrl = '';
   var isLoading = false.obs;
   var selectedMember = ''.obs;
-
 
   var itemsActionBar = [
     FloatingActionButton(
@@ -37,14 +34,11 @@ class HomeController extends GetxController {
     ),
   ];
 
-
-
   // Stream to get user data
   Stream<DocumentSnapshot<Map<String, dynamic>>> getCurrentUserDataStream() {
     String uId = FirebaseAuth.instance.currentUser!.uid;
     return FirebaseFirestore.instance.collection('users').doc(uId).snapshots();
   }
-
 
   // Function to pick an image from the source
   Future<void> pickImageFrom(ImageSource source) async {
@@ -69,20 +63,17 @@ class HomeController extends GetxController {
       if (user == null) {
         throw Exception('User is not authenticated');
       }
-
       final membersRef = FirebaseFirestore.instance
           .collection('usersMemberList')
           .doc(user.uid)
           .collection('members');
-
       String? uploadedImageUrl;
-
       if (image != null) {
         final storageRef = FirebaseStorage.instance
             .ref('usersMemberListImages/${user.uid}')
             .child('${DateTime.now().millisecondsSinceEpoch}.jpg');
 
-        await storageRef.putFile(image.value! );
+        await storageRef.putFile(image.value!);
         uploadedImageUrl = await storageRef.getDownloadURL();
       }
 
@@ -114,8 +105,6 @@ class HomeController extends GetxController {
     }
   }
 
-
-
   // Stream to get userMemberList data
   Stream<QuerySnapshot<Map<String, dynamic>>> getUserDataStream() {
     String uId = FirebaseAuth.instance.currentUser!.uid;
@@ -135,5 +124,4 @@ class HomeController extends GetxController {
         .collection('medication')
         .snapshots();
   }
-
 }

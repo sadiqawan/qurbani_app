@@ -18,6 +18,7 @@ class MedicineCard extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback medTakenOnTap;
   final VoidCallback stockReminderOnTap;
+ final String stockText;
 
   const MedicineCard({
     super.key,
@@ -31,7 +32,7 @@ class MedicineCard extends StatelessWidget {
     required this.editOnTap,
     required this.deleteOnTap,
     required this.onTap,
-    required this.medTakenOnTap, required this.stockReminderOnTap,
+    required this.medTakenOnTap, required this.stockReminderOnTap, required this.stockText,
   });
 
   @override
@@ -137,7 +138,7 @@ class MedicineCard extends StatelessWidget {
                     ElevatedButton(
                         onPressed: stockReminderOnTap,
                         child: Text(
-                          'Stock Reminder',
+                          stockText,
                           style: kSmallTitle1.copyWith(fontSize: 12),
                         )),
                   ],

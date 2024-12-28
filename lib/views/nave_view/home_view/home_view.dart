@@ -10,6 +10,7 @@ import 'package:medally_pro/views/nave_view/home_view/medicine_list_views/medici
 import 'package:radial_button/widget/circle_floating_button.dart';
 import '../../../componants/constant_container.dart';
 import '../../../const/contant_style.dart';
+import '../../../main.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -22,7 +23,12 @@ class _HomeViewState extends State<HomeView> {
   final HomeController homeController = Get.put(HomeController());
 
 
-
+@override
+  void initState() {
+  // chickMedication();
+  // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,85 +112,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
-/*
-Widget memberList() {
-  final HomeController homeController = Get.put(HomeController());
 
-  return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-    stream: homeController.getUserDataStream(),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-
-      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-        return const Center(
-          child: Text('No members found'),
-        );
-      }
-
-      final members = snapshot.data!.docs;
-
-      return ListView.builder(
-        itemCount: members.length,
-        itemBuilder: (context, index) {
-          final memberData = members[index].data();
-          final memberName = memberData['memberName'] ?? 'Unknown';
-          final memberNumber = memberData['memberNumber'] ?? 'N/A';
-          final memberImage = memberData['picture'];
-
-          return ListTile(
-            leading: memberImage != null
-                ? CircleAvatar(
-                    maxRadius: 30.sp,
-                    backgroundImage: NetworkImage(memberImage),
-                  )
-                : CircleAvatar(
-                    maxRadius: 30.sp,
-                    child: Icon(Icons.person),
-                  ),
-            title: Text(
-              memberName,
-              style: kSmallTitle1B,
-            ),
-            subtitle: Text(
-              'Number: $memberNumber',
-              style: kSmallTitle1,
-            ),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () async {
-                try {
-                  await FirebaseFirestore.instance
-                      .collection('usersMemberList')
-                      .doc(FirebaseAuth.instance.currentUser!.uid)
-                      .collection('members')
-                      .doc(members[index].id)
-                      .delete();
-                  Get.snackbar(
-                    "Success",
-                    "Member deleted successfully",
-                    snackPosition: SnackPosition.TOP,
-                    backgroundColor: Colors.green,
-                  );
-                } catch (e) {
-                  Get.snackbar(
-                    "Error",
-                    "Failed to delete member: $e",
-                    snackPosition: SnackPosition.TOP,
-                    backgroundColor: Colors.red,
-                  );
-                }
-              },
-            ),
-          );
-        },
-      );
-    },
-  );
-}*/
 
 Widget userImage() {
   HomeController controller = Get.put(HomeController());
@@ -205,10 +133,7 @@ Widget userImage() {
             backgroundColor: Colors.transparent,
             backgroundImage: const AssetImage("assets/images/icon_person.png"),
           );
-          //   CircleAvatar(
-          //   radius: screenWidth * 0.06,
-          //   backgroundImage: const AssetImage("assets/images/profile.png"),
-          // );
+
         } else {
           return CircleAvatar(
             maxRadius: 30.sp,

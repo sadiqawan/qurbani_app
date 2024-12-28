@@ -140,7 +140,6 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                   ),
                 ),
               ),
-
               SizedBox(height: 15.h),
 
               // second time alarm
@@ -149,7 +148,6 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                 style: kSmallTitle1,
               ),
               SizedBox(height: 15.h),
-
               InkWell(
                 onTap: () async {
                   TimeOfDay? time = await showTimePicker(
@@ -227,11 +225,11 @@ class _AddMedicineViewState extends State<AddMedicineView> {
               ),
 
               SizedBox(height: 15.h),
-              Text(
-                'Set Stock Remainder (Optional)',
-                style: kSmallTitle1,
-              ),
-              SizedBox(height: 15.h),
+              // Text(
+              //   'Set Stock Remainder (Optional)',
+              //   style: kSmallTitle1,
+              // ),
+              // SizedBox(height: 15.h),
 
              /* InkWell(
                 onTap: () => Get.to(AddStockView()),
@@ -364,6 +362,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                               selectedTime!.minute,
                             );
 
+
                             // Define AlarmSettings for the first alarm
                             final alarmSettings = AlarmSettings(
                               id: 1,
@@ -376,8 +375,8 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                               androidFullScreenIntent: true,
                               notificationSettings: const NotificationSettings(
                                 title: 'Medicine Reminder',
-                                body: 'It’s time to take your medicine.',
-                                stopButton: 'Stop the alarm',
+                                body: 'It’s time to take your medicine',
+                                stopButton: 'STOP',
                                 icon: 'notification_icon',
                               ),
                             );
@@ -477,33 +476,6 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                 ),
               ),
 
-              // Submit Button
-              // Center(
-              //   child: Obx(
-              //     () {
-              //       return CustomButton(
-              //         title: controller.isLoading.value
-              //             ? 'Submitting...'
-              //             : 'Submit',
-              //         onTap: () {
-              //           if (!controller.isLoading.value) {
-              //             controller.addMedicine(
-              //               medicineName: medicineController.text.trim(),
-              //               strength: strengthController.text.trim(),
-              //               note: noteController.text.trim(),
-              //               doctorName: doctorController.text.trim(),
-              //               duration: durationController.text.trim(),
-              //               intakePerDay: doseController.text.trim(),
-              //               reminderTime: selectedTime?.format(context) ?? '',
-              //               memberName: memController.text.trim(),
-              //             );
-              //            // Alarm.set(alarmSettings: alarmSettings);
-              //           }
-              //         },
-              //       );
-              //     },
-              //   ),
-              // ),
             ],
           ),
         ),

@@ -1,3 +1,6 @@
+import 'package:alarm/alarm.dart';
+import 'package:alarm/model/alarm_settings.dart';
+import 'package:alarm/model/notification_settings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +19,6 @@ class MedicineListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomeController homeController = Get.put(HomeController());
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -40,15 +42,12 @@ class MedicineListView extends StatelessWidget {
               child: Text('Error loading medication data'),
             );
           }
-
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
             return const Center(
               child: Text('No Active Medicine added yet'),
             );
           }
-
           final medications = snapshot.data!.docs;
-
           return ListView.builder(
             itemCount: medications.length,
             itemBuilder: (context, index) {
@@ -59,7 +58,40 @@ class MedicineListView extends StatelessWidget {
               final durationTime = medicationData['duration'] ?? 'N/A';
               final remainingDose = medicationData['strength'] ?? 'N/A';
               final memberName = medicationData['memberName'] ?? 'N/A';
+              final stockReminder = medicationData['stockReminder'] ?? false;
+              final stockReminderPills = medicationData['stockReminderPills'];
               final medicineImage = medicationData['picture'];
+              if (stockReminder == true &&
+                  stockReminderPills != null &&
+                  remainingDose != null) {
+                // Parse to integer if necessary
+                final int stockReminderPillsInt =
+                    int.tryParse(stockReminderPills.toString()) ?? 0;
+                final int remainingDoseInt =
+                    int.tryParse(remainingDose.toString()) ?? 0;
+
+                if (remainingDoseInt <= stockReminderPillsInt) {
+                  // Set an alarm reminder
+                  final alarmSettings = AlarmSettings(
+                    id: 1,
+                    dateTime: DateTime.now(),
+                    assetAudioPath: 'assets/alarm.mp3',
+                    loopAudio: true,
+                    vibrate: true,
+                    volume: 0.8,
+                    fadeDuration: 3.0,
+                    androidFullScreenIntent: true,
+                    notificationSettings: const NotificationSettings(
+                      title: 'Medicine Stock Reminder',
+                      body: 'It’s time to refill your medicine.',
+                      stopButton: 'STOP',
+                      icon: 'notification_icon',
+                    ),
+                  );
+
+                  Alarm.set(alarmSettings: alarmSettings);
+                }
+              }
 
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -88,9 +120,11 @@ class MedicineListView extends StatelessWidget {
                   memberName: memberName,
                   image: medicineImage,
                   editOnTap: () {
-                    Get.to(() => EditMedicineView(
-                          documentId: medications[index].id,
-                        ));
+                    Get.to(
+                      () => EditMedicineView(
+                        documentId: medications[index].id,
+                      ),
+                    );
                   },
                   medTakenOnTap: () async {
                     try {
@@ -162,7 +196,13 @@ class MedicineListView extends StatelessWidget {
                       );
                     }
                   },
-                  stockReminderOnTap: () => Get.to(AddStockView()),
+                  stockReminderOnTap: () => Get.to(
+                    AddStockView(
+                      docId: medications[index].id,
+                    ),
+                  ),
+                  stockText:
+                      stockReminder == true ? 'Update Remi' : 'Stock Remi',
                 ),
               );
             },
