@@ -51,6 +51,11 @@ dependencies:
   progressive_time_picker: ^1.0.3
   url_launcher:
   alarm: ^4.1.1
+  camera:
+  google_mlkit_text_recognition:
+  permission_handler:
+  google_ml_kit:
+#  permission_handler:
 #  hive: ^2.2.3
 #  android_alarm_manager_plus: 4.0.5
 #  flutter_local_notifications: 18.0.1

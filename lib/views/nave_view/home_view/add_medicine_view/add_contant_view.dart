@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:medally_pro/views/nave_view/home_view/add_stock_views/add_stock_view.dart';
+import 'package:medally_pro/views/nave_view/home_view/add_medicine_view/text_scan_view.dart';
 import 'package:medally_pro/views/nave_view/home_view/home_controller.dart';
 import '../../../../componants/custom_button.dart';
 import '../../../../componants/custom_text_feild.dart';
@@ -23,8 +23,6 @@ class AddMedicineView extends StatefulWidget {
 class _AddMedicineViewState extends State<AddMedicineView> {
   final AddMedicineController controller = Get.put(AddMedicineController());
   final HomeController homeController = Get.put(HomeController());
-
-  // Controllers for input fields
   final TextEditingController medicineController = TextEditingController();
   final TextEditingController strengthController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
@@ -32,10 +30,11 @@ class _AddMedicineViewState extends State<AddMedicineView> {
   final TextEditingController durationController = TextEditingController();
   final TextEditingController doseController = TextEditingController();
   final TextEditingController memController = TextEditingController();
-
   TimeOfDay? selectedTime;
   TimeOfDay? secondSelectedTime;
   TimeOfDay? thirdSelectedTime;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +51,42 @@ class _AddMedicineViewState extends State<AddMedicineView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Input Fields
-              _buildInputField(
-                'Enter Medicine name:',
-                medicineController,
-                'Medicine Name',
-                Icons.medical_information_outlined,
+              Text('Enter Medicine name:',
+                  style: kSmallTitle1.copyWith(color: Colors.black)),
+              SizedBox(height: 10.h),
+
+
+              CustomTextFeild(
+                hint: 'Medicine Name',
+                controller: medicineController,
+                icon: Icons.medical_information_outlined,
+                surfixicon: Icons.qr_code_scanner,
+                surfixiconOntap: () async {
+                  final extractedText = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TextScannerView(
+                        onTextExtracted: (text) {},
+                      ),
+                    ),
+                  );
+                  if (extractedText != null && extractedText is String) {
+                    medicineController.text = extractedText;
+                  }
+                },
               ),
+
+              // CustomTextFeild(
+              //   hint: 'Medicine Name',
+              //   controller: medicineController,
+              //   icon: Icons.medical_information_outlined,
+              //   surfixicon: Icons.qr_code_scanner,
+              //   surfixiconOntap: () {
+              //
+              //   },
+              // ),
+              SizedBox(height: 15.h),
+
               _buildInputField(
                 'Enter Strength:',
                 strengthController,
@@ -230,7 +258,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
               // ),
               // SizedBox(height: 15.h),
 
-             /* InkWell(
+              /* InkWell(
                 onTap: () => Get.to(AddStockView()),
                 child: Container(
                   padding:
@@ -361,7 +389,6 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                               selectedTime!.minute,
                             );
 
-
                             // Define AlarmSettings for the first alarm
                             final alarmSettings = AlarmSettings(
                               id: 1,
@@ -440,16 +467,12 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                               );
                             }
 
-
-
                             // Ensure both durationController and doseController are numbers
-                            var duration = int.parse(durationController.text.trim());
+                            var duration =
+                                int.parse(durationController.text.trim());
                             var dose = int.parse(doseController.text.trim());
 
                             var remain = duration * dose;
-
-
-
 
                             // Call addMedicine to save data
                             controller.addMedicine(
@@ -460,8 +483,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                               duration: durationController.text.trim(),
                               intakePerDay: doseController.text.trim(),
                               reminderTime: selectedTime?.format(context) ?? '',
-                              memberName:
-                                  homeController.selectedMember.value,
+                              memberName: homeController.selectedMember.value,
                               remain: remain,
                             );
 
@@ -486,7 +508,6 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                   },
                 ),
               ),
-
             ],
           ),
         ),
@@ -520,6 +541,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
       ],
     );
   }
+
 // add member Widget
   Widget memberWidget() {
     final HomeController controller = Get.put(HomeController());
@@ -595,3 +617,4 @@ class _AddMedicineViewState extends State<AddMedicineView> {
     );
   }
 }
+

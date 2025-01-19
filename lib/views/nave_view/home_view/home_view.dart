@@ -56,7 +56,7 @@ class _HomeViewState extends State<HomeView> {
                     children: [
                       Text("Welcome To 👋", style: kSubTitle2B),
                       Text(
-                        "MedallyPro",
+                        "MediTrack",
                         style: kSubTitle2B.copyWith(fontSize: 18.sp),
                       ),
                     ],

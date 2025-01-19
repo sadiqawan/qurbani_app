@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'MedallyPro',
+          title: 'MediTrack',
           theme: ThemeData(
             primarySwatch: Colors.cyan,
           ),

@@ -72,7 +72,7 @@ class MedicineListView extends StatelessWidget {
                   medicationData['picture'] ?? Icons.dangerous_outlined;
 
               if (stockReminder == true &&
-                  remainingDose <= stockReminderPills) {
+                  remainingDose == stockReminderPills) {
                 // Set an alarm reminder
                 final alarmSettings = AlarmSettings(
                   id: 1,

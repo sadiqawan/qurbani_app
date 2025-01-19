@@ -8,11 +8,13 @@ import '../const/constant_colors.dart';
 class CustomTextFeild extends StatelessWidget {
   final String hint;
   final IconData icon;
+  final IconData? surfixicon;
   final TextEditingController controller;
   final TextInputType? keyBordType;
   final bool? obscureText;
   final ValueChanged<String>? onSubmit;
   final int? maxLine;
+  final VoidCallback?  surfixiconOntap;
 
   const CustomTextFeild({
     required this.hint,
@@ -23,6 +25,7 @@ class CustomTextFeild extends StatelessWidget {
     this.obscureText,
     this.onSubmit,
     this.maxLine,
+    this.surfixicon, this.surfixiconOntap,
   });
 
   @override
@@ -47,6 +50,7 @@ class CustomTextFeild extends StatelessWidget {
           border: InputBorder.none,
           hintText: hint,
           prefixIcon: Icon(icon),
+          suffixIcon: IconButton(onPressed:  surfixiconOntap, icon: Icon(surfixicon),),
           hintStyle: GoogleFonts.poppins(
             fontSize: 15.sp,
             color: Colors.black,

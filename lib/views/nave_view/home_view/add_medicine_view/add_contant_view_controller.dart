@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,7 +10,6 @@ import 'package:image_picker/image_picker.dart';
 class AddMedicineController extends GetxController {
   Rxn<File> image = Rxn<File>();
   var isLoading = false.obs;
-
 
   // Function to pick an image from the source
   Future<void> pickImageFrom(ImageSource source) async {
@@ -29,17 +26,16 @@ class AddMedicineController extends GetxController {
   }
 
   // Function to add medicine to Firestore
-  Future<void> addMedicine({
-    required String medicineName,
-    required String strength,
-    required String memberName,
-    String? note,
-    String? doctorName,
-    required String duration,
-    required String intakePerDay,
-    required String reminderTime,
-    required int remain
-  }) async {
+  Future<void> addMedicine(
+      {required String medicineName,
+      required String strength,
+      required String memberName,
+      String? note,
+      String? doctorName,
+      required String duration,
+      required String intakePerDay,
+      required String reminderTime,
+      required int remain}) async {
     try {
       isLoading.value = true;
 
@@ -96,8 +92,10 @@ class AddMedicineController extends GetxController {
       isLoading.value = false;
     }
   }
+
   Future<void> updateMedicine({
-    required String documentId, // Include document ID for updating specific records
+    required String
+        documentId, // Include document ID for updating specific records
     required String medicineName,
     required String strength,
     required String memberName,
@@ -163,12 +161,7 @@ class AddMedicineController extends GetxController {
       isLoading.value = false;
     }
   }
-
-
-
-
 }
-
 
 /*
 import 'dart:io';
