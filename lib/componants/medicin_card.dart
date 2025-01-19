@@ -18,7 +18,8 @@ class MedicineCard extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback medTakenOnTap;
   final VoidCallback stockReminderOnTap;
- final String stockText;
+  final String stockText;
+  final String strength;
 
   const MedicineCard({
     super.key,
@@ -32,7 +33,10 @@ class MedicineCard extends StatelessWidget {
     required this.editOnTap,
     required this.deleteOnTap,
     required this.onTap,
-    required this.medTakenOnTap, required this.stockReminderOnTap, required this.stockText,
+    required this.medTakenOnTap,
+    required this.stockReminderOnTap,
+    required this.stockText,
+    required this.strength,
   });
 
   @override
@@ -81,7 +85,8 @@ class MedicineCard extends StatelessWidget {
                       ),
                       Text(
                         doctorName,
-                        style: kSmallTitle1.copyWith(fontWeight: FontWeight.bold),
+                        style:
+                            kSmallTitle1.copyWith(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         "Duration",
@@ -120,6 +125,15 @@ class MedicineCard extends StatelessWidget {
                       ),
                     ),
                     Text(
+                      'Dose Strength',
+                      style: kSmallTitle1.copyWith(color: kWhit),
+                    ),
+                    Text(
+                      strength,
+                      style: kSmallTitle1,
+                    ),
+
+                    Text(
                       'Remaining Dose',
                       style: kSmallTitle1.copyWith(color: kWhit),
                     ),
@@ -146,8 +160,9 @@ class MedicineCard extends StatelessWidget {
               ],
             ),
             CustomButton(
-              color: Colors.white,
-                title: 'Medicine Taken', onTap: medTakenOnTap)
+                color: Colors.white,
+                title: 'Medicine Taken',
+                onTap: medTakenOnTap)
             // ElevatedButton(onPressed: (){}, child: Text('data'))
           ],
         ),

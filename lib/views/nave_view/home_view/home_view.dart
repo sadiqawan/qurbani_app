@@ -10,7 +10,7 @@ import 'package:medally_pro/views/nave_view/home_view/medicine_list_views/medici
 import 'package:radial_button/widget/circle_floating_button.dart';
 import '../../../componants/constant_container.dart';
 import '../../../const/contant_style.dart';
-import '../../../main.dart';
+
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

@@ -38,6 +38,7 @@ class AddMedicineController extends GetxController {
     required String duration,
     required String intakePerDay,
     required String reminderTime,
+    required int remain
   }) async {
     try {
       isLoading.value = true;
@@ -73,6 +74,7 @@ class AddMedicineController extends GetxController {
         'reminderTime': reminderTime,
         'memberName': memberName,
         'picture': uploadedImageUrl,
+        'remainingDose': remain,
       });
 
       Get.snackbar(

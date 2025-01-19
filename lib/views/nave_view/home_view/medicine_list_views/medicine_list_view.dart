@@ -55,42 +55,43 @@ class MedicineListView extends StatelessWidget {
               final medicineName = medicationData['medicineName'] ?? 'Unknown';
               final doctorName = medicationData['doctorName'] ?? 'N/A';
               final reminderTime = medicationData['reminderTime'] ?? 'N/A';
-              final durationTime = medicationData['duration'] ?? 'N/A';
-              final remainingDose = medicationData['strength'] ?? 'N/A';
+              final strength = medicationData['strength'] ?? 'N/A';
+              final durationTime =
+                  medicationData['duration']?.toString() ?? 'N/A';
+              final remainingDose = int.tryParse(
+                    medicationData['remainingDose']?.toString() ?? '0',
+                  ) ??
+                  0;
               final memberName = medicationData['memberName'] ?? 'N/A';
               final stockReminder = medicationData['stockReminder'] ?? false;
-              final stockReminderPills = medicationData['stockReminderPills'];
-              final medicineImage = medicationData['picture'];
+              final stockReminderPills = int.tryParse(
+                    medicationData['stockReminderPills']?.toString() ?? '0',
+                  ) ??
+                  0; // Fallback to 0 if parsing fails
+              final medicineImage =
+                  medicationData['picture'] ?? Icons.dangerous_outlined;
+
               if (stockReminder == true &&
-                  stockReminderPills != null &&
-                  remainingDose != null) {
-                // Parse to integer if necessary
-                final int stockReminderPillsInt =
-                    int.tryParse(stockReminderPills.toString()) ?? 0;
-                final int remainingDoseInt =
-                    int.tryParse(remainingDose.toString()) ?? 0;
+                  remainingDose <= stockReminderPills) {
+                // Set an alarm reminder
+                final alarmSettings = AlarmSettings(
+                  id: 1,
+                  dateTime: DateTime.now(),
+                  assetAudioPath: 'assets/alarm.mp3',
+                  loopAudio: true,
+                  vibrate: true,
+                  volume: 0.8,
+                  fadeDuration: 3.0,
+                  androidFullScreenIntent: true,
+                  notificationSettings: const NotificationSettings(
+                    title: 'Medicine Stock Reminder',
+                    body: 'It’s time to refill your medicine.',
+                    stopButton: 'STOP',
+                    icon: 'notification_icon',
+                  ),
+                );
 
-                if (remainingDoseInt <= stockReminderPillsInt) {
-                  // Set an alarm reminder
-                  final alarmSettings = AlarmSettings(
-                    id: 1,
-                    dateTime: DateTime.now(),
-                    assetAudioPath: 'assets/alarm.mp3',
-                    loopAudio: true,
-                    vibrate: true,
-                    volume: 0.8,
-                    fadeDuration: 3.0,
-                    androidFullScreenIntent: true,
-                    notificationSettings: const NotificationSettings(
-                      title: 'Medicine Stock Reminder',
-                      body: 'It’s time to refill your medicine.',
-                      stopButton: 'STOP',
-                      icon: 'notification_icon',
-                    ),
-                  );
-
-                  Alarm.set(alarmSettings: alarmSettings);
-                }
+                Alarm.set(alarmSettings: alarmSettings);
               }
 
               return Padding(
@@ -116,7 +117,7 @@ class MedicineListView extends StatelessWidget {
                   doctorName: doctorName,
                   durationTime: durationTime,
                   time: reminderTime,
-                  remainingDose: remainingDose,
+                  remainingDose: remainingDose.toString(),
                   memberName: memberName,
                   image: medicineImage,
                   editOnTap: () {
@@ -128,7 +129,6 @@ class MedicineListView extends StatelessWidget {
                   },
                   medTakenOnTap: () async {
                     try {
-                      // Get the current document
                       final docSnapshot = await FirebaseFirestore.instance
                           .collection('usersMemberList')
                           .doc(FirebaseAuth.instance.currentUser!.uid)
@@ -137,17 +137,19 @@ class MedicineListView extends StatelessWidget {
                           .get();
 
                       if (docSnapshot.exists) {
-                        int currentIntake =
-                            int.parse(docSnapshot['strength'].toString());
+                        int currentIntake = int.tryParse(
+                              docSnapshot['remainingDose']?.toString() ?? '0',
+                            ) ??
+                            0;
                         int updatedIntake = currentIntake - 1;
-                        String updatedIntakeInString = updatedIntake.toString();
 
                         await FirebaseFirestore.instance
                             .collection('usersMemberList')
                             .doc(FirebaseAuth.instance.currentUser!.uid)
                             .collection('medication')
                             .doc(medications[index].id)
-                            .update({'strength': updatedIntakeInString});
+                            .update(
+                                {'remainingDose': updatedIntake.toString()});
 
                         Get.snackbar(
                           "Success",
@@ -203,6 +205,7 @@ class MedicineListView extends StatelessWidget {
                   ),
                   stockText:
                       stockReminder == true ? 'Update Remi' : 'Stock Remi',
+                  strength: strength,
                 ),
               );
             },

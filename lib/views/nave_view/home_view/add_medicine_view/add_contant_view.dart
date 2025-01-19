@@ -64,7 +64,6 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                 strengthController,
                 'Strength',
                 Icons.format_list_numbered,
-                isNumber: true,
               ),
               _buildInputField(
                 'Enter Note (Optional):',
@@ -91,7 +90,7 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                 doseController,
                 'Dose',
                 Icons.format_list_numbered_rounded,
-                isNumber: false,
+                isNumber: true,
               ),
               SizedBox(height: 5.h),
               Text(
@@ -441,6 +440,17 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                               );
                             }
 
+
+
+                            // Ensure both durationController and doseController are numbers
+                            var duration = int.parse(durationController.text.trim());
+                            var dose = int.parse(doseController.text.trim());
+
+                            var remain = duration * dose;
+
+
+
+
                             // Call addMedicine to save data
                             controller.addMedicine(
                               medicineName: medicineController.text.trim(),
@@ -451,7 +461,8 @@ class _AddMedicineViewState extends State<AddMedicineView> {
                               intakePerDay: doseController.text.trim(),
                               reminderTime: selectedTime?.format(context) ?? '',
                               memberName:
-                                  homeController.selectedMember.value ?? '',
+                                  homeController.selectedMember.value,
+                              remain: remain,
                             );
 
                             // Set the alarms
