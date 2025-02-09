@@ -17,6 +17,9 @@ class HomeController extends GetxController {
   var isLoading = false.obs;
   var selectedMember = ''.obs;
 
+
+  // floting action btn
+
   var itemsActionBar = [
     FloatingActionButton(
       backgroundColor: kPriemryColor,
@@ -53,5 +56,11 @@ class HomeController extends GetxController {
           snackPosition: SnackPosition.TOP, backgroundColor: Colors.red);
     }
   }
+
+
+
+
+
+
 
 }
