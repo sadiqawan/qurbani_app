@@ -1,28 +1,8 @@
-/*
-import 'package:flutter/cupertino.dart';
-
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
-
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
-*/
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:medally_pro/const/constant_colors.dart';
 import 'package:radial_button/widget/circle_floating_button.dart';
-
 import '../../../const/contant_style.dart';
 import 'home_controller.dart';
 
@@ -72,6 +52,7 @@ class _HomeViewState extends State<HomeView> {
                         "QurbaniApp",
                         style: kSubTitle2B.copyWith(fontSize: 18.sp),
                       ),
+
                     ],
                   ),
                 ],

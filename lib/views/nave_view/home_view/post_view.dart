@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:medally_pro/componants/custom_button.dart';
 import 'package:medally_pro/views/nave_view/home_view/home_controller.dart';
-
 import '../../../componants/custom_text_feild.dart';
 import '../../../const/constant_colors.dart';
 import '../../../const/contant_style.dart';
@@ -23,6 +22,16 @@ class _PostViewState extends State<PostView> {
   TextEditingController priceCon = TextEditingController();
   TextEditingController ageCon = TextEditingController();
   TextEditingController breedCon = TextEditingController();
+
+  @override
+  void dispose() {
+    nameCon.dispose();
+    desCon.dispose();
+    priceCon.dispose();
+    ageCon.dispose();
+    breedCon.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,18 +92,17 @@ class _PostViewState extends State<PostView> {
                     child: Obx(() {
                       return controller.image.value == null
                           ? Icon(
-                        Icons.medical_services_outlined,
-                        size: 200,
-                      )
+                              Icons.medical_services_outlined,
+                              size: 200,
+                            )
                           : Image.file(
-                        controller.image.value!,
-                        fit: BoxFit.fill,
-                      );
+                              controller.image.value!,
+                              fit: BoxFit.fill,
+                            );
                     }),
                   ),
                 ),
               ),
-
               InkWell(
                 onTap: () {
                   Get.bottomSheet(
@@ -115,7 +123,7 @@ class _PostViewState extends State<PostView> {
                               ),
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Flexible(
                                     child: CustomButton(
