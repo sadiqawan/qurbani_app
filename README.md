@@ -1,4 +1,4 @@
-# medally_pro
+# qurbani App
 
 A new Flutter project.
 
