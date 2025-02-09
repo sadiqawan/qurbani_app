@@ -48,9 +48,9 @@ class AuthController extends GetxController{
         'email': emailC.text.trim(),
         'picture': null,
       });
-      // final SharedPreferences pref = await SharedPreferences.getInstance();
-      // await pref.setString('name', nameC.text.trim());
-      // await pref.setString('email', emailC.text.trim());
+      final SharedPreferences pref = await SharedPreferences.getInstance();
+      await pref.setString('name', nameC.text.trim());
+      await pref.setString('email', emailC.text.trim());
       Get.snackbar(
         "Success",
         "Successfully SignUp in",

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "295050447190",
-    "project_id": "newapp-2580d",
-    "storage_bucket": "newapp-2580d.appspot.com"
+    "project_number": "870786651376",
+    "project_id": "localshare-8c63e",
+    "storage_bucket": "localshare-8c63e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:295050447190:android:d9cab16e55a73d1950eef7",
+        "mobilesdk_app_id": "1:870786651376:android:c088d2e7cb572e2e615e35",
         "android_client_info": {
           "package_name": "com.example.medally_pro"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDkfCdpv_V4-mDfMkLylw7B-7GKs1ZJApQ"
+          "current_key": "AIzaSyCSFXS3czbkTu8onTbZBkH4PIuJXzJFz8c"
         }
       ],
       "services": {

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:medally_pro/views/nave_view/chat/chat_view.dart';
 import 'package:medally_pro/views/nave_view/profile_view/profile_view.dart';
+import 'package:medally_pro/views/nave_view/search_view/search_view.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import '../../const/constant_colors.dart';
 import '../../controller/app_controller.dart';
@@ -13,7 +15,7 @@ class BottomNavbarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppController appController = Get.put(AppController());
-    List screens = const [HomeView(), ProfileView()];
+    List screens = const [HomeView(), ChatView(),SearchView(), ProfileView(), ];
 
     return Obx(
       () => Scaffold(
@@ -41,6 +43,20 @@ class BottomNavbarScreen extends StatelessWidget {
                     size: 27,
                   ),
                   title: const Text("Home"),
+                ),
+                SalomonBottomBarItem(
+                  icon: const Icon(
+                    Icons.chat,
+                    size: 27,
+                  ),
+                  title: const Text("chat"),
+                ),
+                SalomonBottomBarItem(
+                  icon: const Icon(
+                    Icons.search_outlined,
+                    size: 27,
+                  ),
+                  title: const Text("Search"),
                 ),
                 SalomonBottomBarItem(
                   icon: const Icon(

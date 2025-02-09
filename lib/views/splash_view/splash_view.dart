@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: AssetImage('assets/images/medical-icon.png'),
+                        image: AssetImage('assets/images/img.png'),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   duration: const Duration(seconds: 5),
                   disappear: true,
                   child: Text(
-                    'MediTrack',
+                    'Qurbani App',
                     style: kSubTitle2B.copyWith(fontSize: 38.sp),
                   ),
                 )

@@ -1,23 +1,19 @@
-import 'package:alarm/alarm.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:medally_pro/views/splash_view/splash_view.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Alarm.init();
+
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: 'AIzaSyDkfCdpv_V4-mDfMkLylw7B-7GKs1ZJApQ',
-      appId: '1:295050447190:android:d9cab16e55a73d1950eef7',
-      messagingSenderId: '295050447190',
-      projectId: 'newapp-2580d',
-      storageBucket: 'newapp-2580d.appspot.com',
-    ),
+    options: DefaultFirebaseOptions.currentPlatform,
+
   );
 
   runApp(const MyApp());

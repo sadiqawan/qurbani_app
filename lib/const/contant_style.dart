@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'constant_colors.dart';
 
-
 var kHeading1 = GoogleFonts.poppins(
   fontSize: 32.sp,
   color: Colors.black,
