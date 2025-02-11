@@ -50,7 +50,9 @@ class _PostViewState extends State<PostView> {
               _buildInputField('Enter Name', controller.nameCon, 'Name', Icons.person),
               _buildInputField('Enter Animal Type', controller.breedCon, 'Animal Type', Icons.pets),
               _buildInputField('Enter Price', controller.priceCon, 'Price', Icons.attach_money, isNumber: true),
-              _buildInputField('Enter Animal Age', controller.ageCon, 'Animal Age', Icons.cake, isNumber: true),
+              _buildInputField('Enter Animal Age', controller.ageCon, 'Animal Age in Year', Icons.cake, isNumber: true),
+              _buildInputField('Enter Animal Location', controller.locaCon, 'Animal Location', Icons.cake,  ),
+              _buildInputField('Enter Your Contact', controller.contCon, 'Contact', Icons.cake, isNumber: true),
               _buildInputField('Enter Description', controller.desCon, 'Description', Icons.description, maxLines: 3),
 
 

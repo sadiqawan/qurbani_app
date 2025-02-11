@@ -17,6 +17,8 @@ class HomeController extends GetxController {
   TextEditingController priceCon = TextEditingController();
   TextEditingController ageCon = TextEditingController();
   TextEditingController breedCon = TextEditingController();
+  TextEditingController locaCon = TextEditingController();
+  TextEditingController contCon = TextEditingController();
 
   @override
   void dispose() {
@@ -25,6 +27,8 @@ class HomeController extends GetxController {
     priceCon.dispose();
     ageCon.dispose();
     breedCon.dispose();
+    locaCon.dispose();
+    contCon.dispose();
     super.dispose();
   }
 
@@ -49,6 +53,11 @@ class HomeController extends GetxController {
     return FirebaseFirestore.instance.collection('users').doc(uId).snapshots();
   }
 
+// Stream to get all Medicine data
+  Stream<QuerySnapshot<Map<String, dynamic>>> getAllPost() {
+    return FirebaseFirestore.instance.collection('userPosts').snapshots();
+  }
+
   Future<void> pickImageFrom(ImageSource source) async {
     try {
       final pickedFile = await ImagePicker().pickImage(source: source);
@@ -67,6 +76,8 @@ class HomeController extends GetxController {
         priceCon.text.isEmpty ||
         ageCon.text.isEmpty ||
         breedCon.text.isEmpty ||
+        locaCon.text.isEmpty ||
+        contCon.text.isEmpty ||
         image.value == null) {
       Get.snackbar('Validation Error', 'All fields are required',
           snackPosition: SnackPosition.TOP, backgroundColor: Colors.orange);
@@ -85,19 +96,22 @@ class HomeController extends GetxController {
         'price': priceCon.text.trim(),
         'age': ageCon.text.trim(),
         'breed': breedCon.text.trim(),
+        'animalLocation': locaCon.text.trim(),
+        'animalContact': contCon.text.trim(),
         'imageUrl': imageUrl,
         'timestamp': FieldValue.serverTimestamp(),
       });
 
       Get.snackbar('Success', 'Post uploaded successfully',
           snackPosition: SnackPosition.TOP, backgroundColor: Colors.green);
-      Get.back();
 
       nameCon.clear();
       desCon.clear();
       priceCon.clear();
       ageCon.clear();
       breedCon.clear();
+      contCon.clear();
+      locaCon.clear();
       image.value = null;
     } catch (e) {
       Get.snackbar('Error', 'Error posting data: $e',

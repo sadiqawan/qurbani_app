@@ -48,6 +48,7 @@ dependencies:
   fade_out_particle: ^1.2.1
   intl: ^0.20.1
   radial_button: ^1.0.1
+  url_launcher: ^6.3.1
 
 
 
