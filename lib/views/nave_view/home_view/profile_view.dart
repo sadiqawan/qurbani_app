@@ -35,6 +35,7 @@ Widget _screen(BuildContext context) {
             color: Colors.black,
           ),
       ),
+      backgroundColor: kPriemryColor,
     ),
     body: Column(
       crossAxisAlignment: CrossAxisAlignment.center,

@@ -24,11 +24,14 @@ Widget _screen(BuildContext context) {
       Get.put(ProfileViewController());
   final format = DateFormat('MMMM dd yyyy');
   return Scaffold(
+    appBar: AppBar(
+      backgroundColor: kPriemryColor,
+    ),
     body: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          height: 30.h,
+          height: 20.h,
         ),
         Text(
           'PROFILE',
