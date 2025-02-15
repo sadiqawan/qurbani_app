@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -264,10 +266,9 @@ Widget getAllPost() {
                               ),
                               ElevatedButton.icon(
                                 onPressed: () {
-                                  // Handle call action
+                                  controller.startPayment(animalName, animalPrice);
                                 },
-                                icon: Icon(Icons.check_box,
-                                    size: 20, color: Colors.white),
+                                icon: Icon(Icons.check_box, size: 20, color: Colors.white),
                                 label: Text("Buy Now"),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: kPriemryColor,
@@ -276,6 +277,7 @@ Widget getAllPost() {
                                   ),
                                 ),
                               ),
+
                             ],
                           ),
                           SizedBox(height: 5),

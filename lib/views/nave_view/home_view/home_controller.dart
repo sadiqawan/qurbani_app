@@ -7,7 +7,9 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:medally_pro/views/nave_view/home_view/post_view.dart';
 import 'package:medally_pro/views/nave_view/home_view/profile_view.dart';
+import 'package:pay/pay.dart';
 import '../../../const/constant_colors.dart';
+import '../../../payment_config/paymet_config.dart';
 
 class HomeController extends GetxController {
   static HomeController instance = Get.put(HomeController());
@@ -132,5 +134,44 @@ class HomeController extends GetxController {
     } catch (e) {
       throw Exception('Error uploading image: $e');
     }
+  }
+
+  void startPayment(String item, String amount) {
+    if (Platform.isIOS) {
+      Get.dialog(_applePayButton(item, amount));
+    } else {
+      Get.dialog(_googlePayButton(item, amount));
+    }
+  }
+
+  Widget _applePayButton(String item, String amount) {
+    return ApplePayButton(
+      paymentConfiguration:
+          PaymentConfiguration.fromJsonString(defaultApplePay),
+      paymentItems: [
+        PaymentItem(
+            label: item, amount: amount, status: PaymentItemStatus.final_price),
+      ],
+      style: ApplePayButtonStyle.black,
+      type: ApplePayButtonType.buy,
+      margin: const EdgeInsets.only(top: 15.0),
+      onPaymentResult: (result) => debugPrint('Apple Pay Result: $result'),
+      loadingIndicator: const Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  Widget _googlePayButton(String item, String amount) {
+    return GooglePayButton(
+      paymentConfiguration:
+          PaymentConfiguration.fromJsonString(defaultGooglePay),
+      paymentItems: [
+        PaymentItem(
+            label: item, amount: amount, status: PaymentItemStatus.final_price),
+      ],
+      type: GooglePayButtonType.buy,
+      margin: const EdgeInsets.only(top: 500, left: 20, right: 20),
+      onPaymentResult: (result) => debugPrint('Google Pay Result: $result'),
+      loadingIndicator: const Center(child: CircularProgressIndicator()),
+    );
   }
 }

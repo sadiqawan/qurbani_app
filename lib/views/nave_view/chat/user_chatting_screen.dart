@@ -3,20 +3,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medally_pro/const/constant_colors.dart';
 import 'package:medally_pro/const/contant_style.dart';
-import '../../../services/chat_service.dart';
+import 'package:medally_pro/services/chat_service.dart';
 
 class UserChattingScreen extends StatefulWidget {
   final String receiverId;
-  final String userName;
+  final String receiverName;
 
   const UserChattingScreen({
-    super.key,
+    Key? key,
     required this.receiverId,
-    required this.userName,
-  });
+    required this.receiverName,
+  }) : super(key: key);
 
   @override
-  State<UserChattingScreen> createState() => _UserChattingScreenState();
+  _UserChattingScreenState createState() => _UserChattingScreenState();
 }
 
 class _UserChattingScreenState extends State<UserChattingScreen> {
@@ -29,7 +29,7 @@ class _UserChattingScreenState extends State<UserChattingScreen> {
       await _chatService.sendMessage(
         widget.receiverId,
         _messageController.text.trim(),
-        widget.userName,
+        widget.receiverName,
       );
       _messageController.clear();
     }
@@ -37,68 +37,70 @@ class _UserChattingScreenState extends State<UserChattingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: kWhit,
-          appBar: AppBar(
-            backgroundColor: kPriemryColor,
-            title: Text(widget.userName, style: kSmallTitle1),
-            centerTitle: true,
-            elevation: 1,
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.receiverName),
+        backgroundColor: kWhit,
+        elevation: 1,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: _buildMessageList(),
           ),
-          body: Column(
-            children: [
-              Expanded(child: _buildMessageList()),
-              _buildMessageInput()
-            ],
-          ),
-        ),
+          _buildMessageInput(),
+        ],
       ),
     );
   }
 
+  // Build message list
   Widget _buildMessageList() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: StreamBuilder(
-        stream: _chatService.getMessages(
-          _firebaseAuth.currentUser!.uid,
-          widget.receiverId,
-        ),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return ListView(
-            children: snapshot.data!.docs
-                .map((document) => _buildMessageItem(document))
-                .toList(),
-          );
-        },
+    return StreamBuilder(
+      stream: _chatService.getMessages(
+        _firebaseAuth.currentUser!.uid,
+        widget.receiverId,
       ),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Center(child: Text('No messages yet.'));
+        }
+
+        return ListView(
+          padding: EdgeInsets.all(8.0),
+          children: snapshot.data!.docs
+              .map((document) => _buildMessageItem(document))
+              .toList(),
+        );
+      },
     );
   }
 
+  // Build message item
   Widget _buildMessageItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-    var isCurrentUser = data['senderId'] == _firebaseAuth.currentUser!.uid;
-    var alignment = isCurrentUser ? Alignment.centerRight : Alignment.centerLeft;
+    var alignment = (data['senderId'] == _firebaseAuth.currentUser!.uid)
+        ? Alignment.centerRight
+        : Alignment.centerLeft;
 
     return Align(
       alignment: alignment,
       child: Container(
-        padding: const EdgeInsets.all(12.0),
-        margin: const EdgeInsets.symmetric(vertical: 4.0),
+        padding: EdgeInsets.all(12.0),
+        margin: EdgeInsets.symmetric(vertical: 4.0),
         constraints: BoxConstraints(
           maxWidth: MediaQuery.of(context).size.width * 0.7,
         ),
         decoration: BoxDecoration(
-          color: isCurrentUser ? kBlack.withOpacity(.5) : kPriemryColor,
+          color: data['senderId'] == _firebaseAuth.currentUser!.uid
+              ? Colors.deepOrange
+              : kPriemryColor,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
@@ -109,9 +111,10 @@ class _UserChattingScreenState extends State<UserChattingScreen> {
     );
   }
 
+  // Build message input
   Widget _buildMessageInput() {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: EdgeInsets.all(15.0),
       child: Row(
         children: [
           Expanded(
@@ -125,20 +128,20 @@ class _UserChattingScreenState extends State<UserChattingScreen> {
                   borderRadius: BorderRadius.circular(24.0),
                   borderSide: BorderSide.none,
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          SizedBox(width: 8),
           InkWell(
             onTap: sendMessage,
             child: Container(
-              padding: const EdgeInsets.all(12.0),
-              decoration:   BoxDecoration(
-                color: kPriemryColor,
+              padding: EdgeInsets.all(12.0),
+              decoration: BoxDecoration(
+                color: Colors.deepOrange,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.send, color: Colors.white),
+              child: Icon(Icons.send, color: Colors.white),
             ),
           ),
         ],

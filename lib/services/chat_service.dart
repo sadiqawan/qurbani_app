@@ -3,25 +3,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 import '../model/massage.dart';
-  // Ensure this file is correctly named
+
 
 class ChatService extends ChangeNotifier {
-  // Firebase instances
+  // Get instances of Firebase Auth and Firestore
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   // Send message
   Future<void> sendMessage(
       String receiverId, String message, String receiverName) async {
-    // Ensure current user is not null
-    final User? currentUser = _firebaseAuth.currentUser;
-    if (currentUser == null) return;
-
-    final String currentUserId = currentUser.uid;
-    final String currentUserEmail = currentUser.email ?? "Unknown";
+    // Get current user info
+    final String currentUserId = _firebaseAuth.currentUser!.uid;
+    final String currentUserEmail = _firebaseAuth.currentUser!.email.toString();
     final Timestamp timestamp = Timestamp.now();
 
-    // Create a new message object
+    // Create a new message
     Message newMessage = Message(
       senderId: currentUserId,
       senderEmail: currentUserEmail,
@@ -30,18 +27,19 @@ class ChatService extends ChangeNotifier {
       timestamp: timestamp,
     );
 
-    // Generate chat room ID
-    List<String> ids = [currentUserId, receiverId]..sort();
+    // Construct chat room ID from current user ID and receiver ID
+    List<String> ids = [currentUserId, receiverId];
+    ids.sort(); // Ensure consistent chat room ID
     String chatRoomId = ids.join("_");
 
-    // Add the new message to Firestore
+    // Add new message to the database
     await _firebaseFirestore
         .collection('chat_rooms')
         .doc(chatRoomId)
         .collection('messages')
         .add(newMessage.toMap());
 
-    // Update chat room's last message and metadata
+    // Update chat room's last message and timestamp
     await _firebaseFirestore.collection('chat_rooms').doc(chatRoomId).set({
       'lastMessage': message,
       'timestamp': timestamp,
@@ -50,12 +48,13 @@ class ChatService extends ChangeNotifier {
       'receiverId': receiverId,
       'senderId': currentUserId,
       'receiverName': receiverName,
-    }, SetOptions(merge: true)); // Prevent overwriting existing data
+    }, SetOptions(merge: true));
   }
 
-  // Get messages between two users
+  // Get messages
   Stream<QuerySnapshot> getMessages(String userId, String otherUserId) {
-    List<String> ids = [userId, otherUserId]..sort();
+    List<String> ids = [userId, otherUserId];
+    ids.sort(); // Ensure consistent chat room ID
     String chatRoomId = ids.join("_");
 
     return _firebaseFirestore
@@ -68,14 +67,11 @@ class ChatService extends ChangeNotifier {
 
   // Get chat list for the current user
   Stream<QuerySnapshot> getChatList() {
-    final User? currentUser = _firebaseAuth.currentUser;
-    if (currentUser == null) {
-      return const Stream.empty();
-    }
+    final String currentUserId = _firebaseAuth.currentUser!.uid;
 
     return _firebaseFirestore
         .collection('chat_rooms')
-        .where('participants', arrayContains: currentUser.uid)
+        .where('participants', arrayContains: currentUserId)
         .orderBy('timestamp', descending: true)
         .snapshots();
   }

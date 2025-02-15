@@ -32,10 +32,13 @@ class _ChatViewState extends State<ChatView> {
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Cheating', style: kSubTitle2B,),
+              title: Text(
+                'Cheating',
+                style: kSubTitle2B,
+              ),
               backgroundColor: kPriemryColor,
             ),
-              body: Center(
+            body: Center(
               child: Text(
                 "Chat list is empty.",
                 style: kSubTitle2B,
@@ -49,7 +52,10 @@ class _ChatViewState extends State<ChatView> {
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text('Cheating', style: kSubTitle2B,),
+            title: Text(
+              'Cheating',
+              style: kSubTitle2B,
+            ),
             backgroundColor: kPriemryColor,
           ),
           body: ListView.builder(
@@ -73,8 +79,10 @@ class _ChatViewState extends State<ChatView> {
                   final currentUserId = _firebaseAuth.currentUser?.uid;
                   if (currentUserId != null) {
                     Get.to(
-                          () => UserChattingScreen(
-                          receiverId: receiverId, userName: receiverName),
+                      UserChattingScreen(
+                        receiverId: receiverId,
+                          receiverName:receiverName,
+                      ),
                     );
                   }
                 },

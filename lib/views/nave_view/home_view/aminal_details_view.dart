@@ -7,6 +7,7 @@ import 'package:medally_pro/const/contant_style.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../chat/user_chatting_screen.dart';
+import 'home_controller.dart';
 
 class AnimalDetailsView extends StatelessWidget {
   final String animalName;
@@ -42,7 +43,7 @@ class AnimalDetailsView extends StatelessWidget {
         throw 'Could not launch $url';
       }
     }
-
+    HomeController controller = Get.put(HomeController());
     return Scaffold(
       appBar: AppBar(
         title: Text('Animal Details'),
@@ -133,7 +134,7 @@ class AnimalDetailsView extends StatelessWidget {
                   ),
                   ElevatedButton.icon(
                     onPressed: () {
-                      // Handle call action
+                      controller.startPayment(animalName, animalPrice);
                     },
                     icon: Icon(Icons.check_box, size: 20, color: Colors.white),
                     label: Text("Buy Now"),
@@ -153,10 +154,12 @@ class AnimalDetailsView extends StatelessWidget {
               CustomButton(
                   title: 'Chat Now',
                   onTap: () {
-                    Get.to(UserChattingScreen(
-                      receiverId: receiverId, userName: contactNo,
-
-                    ));
+                    Get.to(
+                      UserChattingScreen(
+                        receiverId: receiverId,
+                        receiverName: contactNo,
+                      ),
+                    );
                   }),
               SizedBox(
                 height: 20.h,

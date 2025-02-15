@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:medally_pro/const/constant_colors.dart';
+
 import 'package:medally_pro/views/splash_view/splash_view.dart';
 
 
