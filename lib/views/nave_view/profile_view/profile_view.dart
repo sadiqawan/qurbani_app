@@ -25,6 +25,8 @@ Widget _screen(BuildContext context) {
   final format = DateFormat('MMMM dd yyyy');
   return Scaffold(
     appBar: AppBar(
+      centerTitle: true,
+      title: Text('Profile', style: kSubTitle2B,),
       backgroundColor: kPriemryColor,
     ),
     body: Column(

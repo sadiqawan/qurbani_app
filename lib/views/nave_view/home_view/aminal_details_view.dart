@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:medally_pro/componants/custom_button.dart';
 import 'package:medally_pro/const/constant_colors.dart';
 import 'package:medally_pro/const/contant_style.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../chat/user_chatting_screen.dart';
 
 class AnimalDetailsView extends StatelessWidget {
   final String animalName;
@@ -13,6 +17,7 @@ class AnimalDetailsView extends StatelessWidget {
   final String animalPrice;
   final String animalLocation;
   final String contactNo;
+  final String receiverId;
 
   const AnimalDetailsView({
     super.key,
@@ -24,10 +29,20 @@ class AnimalDetailsView extends StatelessWidget {
     required this.animalPrice,
     required this.animalLocation,
     required this.contactNo,
+    required this.receiverId,
   });
 
   @override
   Widget build(BuildContext context) {
+    void _launchCaller(String contactNo) async {
+      final Uri url = Uri.parse("tel:$contactNo");
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Animal Details'),
@@ -106,15 +121,13 @@ class AnimalDetailsView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton.icon(
-                    onPressed: () {
-                      // Handle call action
-                    },
+                    onPressed: () => _launchCaller(contactNo),
                     icon: Icon(Icons.call, size: 20, color: Colors.white),
                     label: Text("Contact"),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: kPriemryColor,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.sp),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                   ),
@@ -137,7 +150,14 @@ class AnimalDetailsView extends StatelessWidget {
                 height: 20.h,
               ),
 
-              CustomButton(title: 'Chat Now', onTap: () {}),
+              CustomButton(
+                  title: 'Chat Now',
+                  onTap: () {
+                    Get.to(UserChattingScreen(
+                      receiverId: receiverId, userName: contactNo,
+
+                    ));
+                  }),
               SizedBox(
                 height: 20.h,
               )

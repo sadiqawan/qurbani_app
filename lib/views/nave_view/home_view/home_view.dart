@@ -140,6 +140,7 @@ Widget getAllPost() {
               var animalPrice = post['price'] ?? 'N/A';
               var animalLocation = post['animalLocation'] ?? 'Unknown';
               var contactNo = post['animalContact'] ?? 'No Contact';
+              var receiverId = post['userId'] ?? 'No userId';
 
               var timestamp = post['timestamp'] as Timestamp?;
               var postTime = timestamp != null
@@ -157,7 +158,7 @@ Widget getAllPost() {
                     animalImageUrl: post['imageUrl'] ?? '',
                     animalPrice: post['price'] ?? 'Not available',
                     animalLocation: post['animalLocation'] ?? 'Unknown',
-                    contactNo: post['animalContact'] ?? 'Not available',
+                    contactNo: post['animalContact'] ?? 'Not available', receiverId: receiverId,
                   ),
                 ),
                 child: Padding(
