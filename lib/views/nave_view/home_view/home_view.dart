@@ -247,7 +247,7 @@ Widget getAllPost() {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "\$${animalPrice}",
+                                "PKR:$animalPrice",
                                 style: TextStyle(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.bold,
