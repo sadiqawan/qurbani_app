@@ -37,8 +37,8 @@ class _HomeViewState extends State<HomeView> {
                 Text("Welcome To 👋",
                     style: kSubTitle2B.copyWith(fontSize: 16.sp)),
                 Text(
-                  "QurbaniApp",
-                  style: kSubTitle2B.copyWith(fontSize: 14.sp),
+                  "OnlineQurbaniShop",
+                  style: kSubTitle2B.copyWith(fontSize: 12.sp),
                 ),
               ],
             ),
