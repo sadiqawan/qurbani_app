@@ -36,7 +36,7 @@ class _SearchViewState extends State<SearchView> {
                 searchQuery.value = value;
               },
               decoration: InputDecoration(
-                hintText: 'Search Medicine...',
+                hintText: 'Search Animals...',
                 prefixIcon: Icon(Icons.search),
                 filled: true,
                 fillColor: kPriemryColor,
