@@ -62,7 +62,7 @@ class AnimalDetailsView extends StatelessWidget {
                   animalImageUrl,
                   width: double.infinity,
                   height: 350.h,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   loadingBuilder: (context, child, loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Center(child: CircularProgressIndicator());

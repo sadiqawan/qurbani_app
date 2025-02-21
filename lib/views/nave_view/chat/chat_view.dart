@@ -33,7 +33,7 @@ class _ChatViewState extends State<ChatView> {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                'Cheating',
+                'Chatting',
                 style: kSubTitle2B,
               ),
               backgroundColor: kPriemryColor,

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medally_pro/views/nave_view/home_view/aminal_details_view.dart';
 import 'package:medally_pro/views/nave_view/search_view/search_controller.dart';
 import '../../../const/constant_colors.dart';
 import '../../../const/contant_style.dart';
@@ -95,45 +96,62 @@ Widget getSearchElement(BuildContext context, String searchQuery) {
         itemBuilder: (context, index) {
           final item = filteredData[index];
 
-          return Container(
-            decoration: BoxDecoration(
-              color: kWhit,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 4,
-                  spreadRadius: 2,
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child:
-                      Image.network(
-                        item["imageUrl"]  ,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: 120,
-                        errorBuilder: (context, error, stackTrace) =>
-                            Icon(Icons.image_not_supported),
+          return InkWell(
+            onTap: (){
+              Get.to(
+                AnimalDetailsView(
+                  animalName: item['animalName'] ?? 'Unknown',
+                  animalAge: item['age'] ?? 'Unknown',
+                  animalBreed: item['breed'] ?? 'Unknown',
+                  animalDescription: item['description'] ?? 'No description',
+                  animalImageUrl: item["imageUrl"]??'',
+                  animalPrice: item['price'] ?? 'Not available',
+                  animalLocation: item['animalLocation'] ?? 'Unknown',
+                  contactNo: item['animalContact'] ?? 'Not available',
+                  receiverId: item['userId'] ?? 'No userId'
+              ),
+              );
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: kWhit,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 4,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child:
+                        Image.network(
+                          item["imageUrl"]  ,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 120,
+                          errorBuilder: (context, error, stackTrace) =>
+                              Icon(Icons.image_not_supported),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    item["animalName"] ?? "Unknown",
-                    style: kSubTitle2B,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      item["animalName"] ?? "Unknown",
+                      style: kSubTitle2B,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

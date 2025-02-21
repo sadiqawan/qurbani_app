@@ -115,7 +115,7 @@ Widget getAllPost() {
         );
       } else {
         var postData = snapshot.data!.docs;
-        void _launchCaller(String contactNo) async {
+        void launchCaller(String contactNo) async {
           final Uri url = Uri.parse("tel:$contactNo");
           if (await canLaunchUrl(url)) {
             await launchUrl(url);
@@ -160,7 +160,8 @@ Widget getAllPost() {
                     animalImageUrl: post['imageUrl'] ?? '',
                     animalPrice: post['price'] ?? 'Not available',
                     animalLocation: post['animalLocation'] ?? 'Unknown',
-                    contactNo: post['animalContact'] ?? 'Not available', receiverId: receiverId,
+                    contactNo: post['animalContact'] ?? 'Not available',
+                    receiverId: receiverId,
                   ),
                 ),
                 child: Padding(
@@ -188,7 +189,7 @@ Widget getAllPost() {
                                     animalImageUrl,
                                     width: double.infinity,
                                     height: 300,
-                                    fit: BoxFit.cover,
+                                    fit: BoxFit.fill,
                                     loadingBuilder:
                                         (context, child, loadingProgress) {
                                       if (loadingProgress == null) return child;
@@ -253,7 +254,7 @@ Widget getAllPost() {
                                     color: Colors.green),
                               ),
                               ElevatedButton.icon(
-                                onPressed: () => _launchCaller(contactNo),
+                                onPressed: () => launchCaller(contactNo),
                                 icon: Icon(Icons.call,
                                     size: 20, color: Colors.white),
                                 label: Text("Contact"),
