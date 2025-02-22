@@ -65,11 +65,9 @@ class _SplashScreenState extends State<SplashScreen> {
                   curve: Curves.bounceIn,
                   duration: const Duration(seconds: 5),
                   disappear: true,
-                  child: Flexible(
-                    child: Text(
-                      'OnlineQurbaniShop',
-                      style: kSubTitle2B.copyWith(fontSize: 28.sp, ),
-                    ),
+                  child: Text(
+                    'OnlineQurbaniShop',
+                    style: kSubTitle2B.copyWith(fontSize: 28.sp, ),
                   ),
                 )
               ],
