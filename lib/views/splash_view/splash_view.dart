@@ -59,15 +59,17 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 80,
+                  height: 70,
                 ),
                 FadeOutParticle(
                   curve: Curves.bounceIn,
                   duration: const Duration(seconds: 5),
                   disappear: true,
-                  child: Text(
-                    'OnlineQurbaniShop',
-                    style: kSubTitle2B.copyWith(fontSize: 38.sp),
+                  child: Flexible(
+                    child: Text(
+                      'OnlineQurbaniShop',
+                      style: kSubTitle2B.copyWith(fontSize: 28.sp, ),
+                    ),
                   ),
                 )
               ],

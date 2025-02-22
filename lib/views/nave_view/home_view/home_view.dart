@@ -241,40 +241,45 @@ Widget getAllPost() {
                             ],
                           ),
                           SizedBox(height: 10),
+                          Text(
+                            "PKR:$animalPrice",
+                            style: TextStyle(
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
+                          ),
 
                           // Price & Contact
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(
-                                "PKR:$animalPrice",
-                                style: TextStyle(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green),
-                              ),
-                              ElevatedButton.icon(
-                                onPressed: () => launchCaller(contactNo),
-                                icon: Icon(Icons.call,
-                                    size: 20, color: Colors.white),
-                                label: Text("Contact"),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: kPriemryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+
+                              Flexible(
+                                child: ElevatedButton.icon(
+                                  onPressed: () => launchCaller(contactNo),
+                                  icon: Icon(Icons.call,
+                                      size: 15, color: Colors.white),
+                                  label: Text("Contact"),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: kPriemryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
                                   ),
                                 ),
                               ),
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  controller.startPayment(animalName, animalPrice);
-                                },
-                                icon: Icon(Icons.check_box, size: 20, color: Colors.white),
-                                label: Text("Buy Now"),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: kPriemryColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                              Flexible(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    controller.startPayment(animalName, animalPrice);
+                                  },
+                                  icon: Icon(Icons.check_box, size: 15, color: Colors.white),
+                                  label: Text("Buy Now"),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: kPriemryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
                                   ),
                                 ),
                               ),
