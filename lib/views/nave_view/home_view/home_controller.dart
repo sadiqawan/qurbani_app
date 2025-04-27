@@ -55,7 +55,7 @@ class HomeController extends GetxController {
     return FirebaseFirestore.instance.collection('users').doc(uId).snapshots();
   }
 
-// Stream to get all Medicine data
+
   Stream<QuerySnapshot<Map<String, dynamic>>> getAllPost() {
     return FirebaseFirestore.instance.collection('userPosts').snapshots();
   }
@@ -102,6 +102,7 @@ class HomeController extends GetxController {
         'animalContact': contCon.text.trim(),
         'imageUrl': imageUrl,
         'timestamp': FieldValue.serverTimestamp(),
+        'review':[]
       });
 
       Get.snackbar('Success', 'Post uploaded successfully',

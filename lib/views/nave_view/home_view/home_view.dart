@@ -1,4 +1,4 @@
-import 'dart:io';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -115,6 +115,7 @@ Widget getAllPost() {
         );
       } else {
         var postData = snapshot.data!.docs;
+
         void launchCaller(String contactNo) async {
           final Uri url = Uri.parse("tel:$contactNo");
           if (await canLaunchUrl(url)) {
@@ -123,7 +124,6 @@ Widget getAllPost() {
             throw 'Could not launch $url';
           }
         }
-
         return Expanded(
           child: ListView.builder(
             shrinkWrap: true,
@@ -143,7 +143,6 @@ Widget getAllPost() {
               var animalLocation = post['animalLocation'] ?? 'Unknown';
               var contactNo = post['animalContact'] ?? 'No Contact';
               var receiverId = post['userId'] ?? 'No userId';
-
               var timestamp = post['timestamp'] as Timestamp?;
               var postTime = timestamp != null
                   ? DateFormat('dd MMM yyyy, hh:mm a')
@@ -162,6 +161,7 @@ Widget getAllPost() {
                     animalLocation: post['animalLocation'] ?? 'Unknown',
                     contactNo: post['animalContact'] ?? 'Not available',
                     receiverId: receiverId,
+
                   ),
                 ),
                 child: Padding(

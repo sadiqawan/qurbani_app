@@ -1,0 +1,2 @@
+D:/medally_pro/android/app/.cxx/RelWithDebInfo/236w543u/x86_64/CMakeFiles/edit_cache.dir
+D:/medally_pro/android/app/.cxx/RelWithDebInfo/236w543u/x86_64/CMakeFiles/rebuild_cache.dir

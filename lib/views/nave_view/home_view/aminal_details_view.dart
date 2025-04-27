@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:medally_pro/componants/custom_button.dart';
 import 'package:medally_pro/const/constant_colors.dart';
 import 'package:medally_pro/const/contant_style.dart';
+import 'package:medally_pro/views/nave_view/home_view/all_review_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -126,22 +127,46 @@ class AnimalDetailsView extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 5),
-              RatingBar.builder(
-                initialRating: 4.0, // Default rating
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (rating) {
-                  print("New Rating: $rating");
-                },
+              Row(
+                children: [
+                  RatingBar.builder(
+                    initialRating: 2.5,
+                    // Default rating
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 3,
+                    itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                    itemBuilder: (context, _) => Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
+                      print("New Rating: $rating");
+                    },
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Get.to(AllReviewView(
+                        name: animalName,
+                        age: animalAge,
+                        price: animalPrice,
+                        location: animalLocation,
+                      ));
+
+                    },
+                    icon: Icon(Icons.star, size: 20, color: Colors.white),
+                    label: Text("Show Review"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kPriemryColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 10),
 
               // Contact and Buy Buttons
               Row(
@@ -194,18 +219,6 @@ class AnimalDetailsView extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';

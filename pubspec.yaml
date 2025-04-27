@@ -51,6 +51,7 @@ dependencies:
   url_launcher: ^6.3.1
   pay:
   flutter_rating_bar:
+  icons_launcher: ^3.0.1
 
 
 
@@ -66,6 +67,17 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+
+icons_launcher:
+  image_path: "assets/images/img.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
+    window:
+      enable: true
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
